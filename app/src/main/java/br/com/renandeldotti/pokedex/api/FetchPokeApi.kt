@@ -8,7 +8,7 @@ interface FetchPokeApi {
 
     //Get all regions with it's url and id
     @GET("region")
-    fun getRegions():Call<String>
+    fun getRegions()
 
     //Get the Pokedexes from a defined region
     @GET("regions/{id}")
@@ -17,4 +17,8 @@ interface FetchPokeApi {
     //Get all Pokemon from a Pokedex
     @GET("pokedex/{id}/")
     fun getPokemonFromPokedex(@Path("id") pokedexId:Int)
+
+    //Get pokemon info
+    @GET("pokemon/{id}/")
+    fun getPokemonInfo(@Path("id") pokemonID:Int)
 }
