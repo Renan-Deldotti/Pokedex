@@ -14,6 +14,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             tools:context=".MainActivity">
+
             <fragment
                 android:id="@+id/fragment_nav_host"
                 android:name="androidx.navigation.fragment.NavHostFragment"
@@ -28,8 +29,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            app:menu="@menu/navdrawer_menu"
-            app:headerLayout="@layout/navdrawer_header"/>
+            app:headerLayout="@layout/navdrawer_header"
+            app:menu="@menu/navdrawer_menu" />
 
     </androidx.drawerlayout.widget.DrawerLayout>
 </layout>
