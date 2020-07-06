@@ -2,6 +2,7 @@ package br.com.renandeldotti.pokedex
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.NavController
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(activityMainBinding.root)
+        val toolbar: Toolbar = activityMainBinding.toolbar
+        setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = activityMainBinding.drawerLayout
         val navView: NavigationView = activityMainBinding.navigationView
