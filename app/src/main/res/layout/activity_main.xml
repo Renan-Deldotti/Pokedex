@@ -10,10 +10,9 @@
         android:fitsSystemWindows="true"
         tools:openDrawer="start">
 
-        <LinearLayout
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             tools:context=".MainActivity">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -38,7 +37,7 @@
                 app:defaultNavHost="true"
                 app:navGraph="@navigation/navigation" />
 
-        </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/navigationView"
