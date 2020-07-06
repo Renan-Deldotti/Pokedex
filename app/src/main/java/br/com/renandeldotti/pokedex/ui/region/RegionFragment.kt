@@ -1,5 +1,6 @@
 package br.com.renandeldotti.pokedex.ui.region
 
+import android.graphics.Rect
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.renandeldotti.pokedex.R
 import kotlinx.android.synthetic.main.fragment_region.view.*
 
@@ -26,7 +28,6 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
         (regionsList as ArrayList<String>).add("Kanto")
 
         view.recyclerView_regions.layoutManager = GridLayoutManager(context,2)
-        view.recyclerView_regions.setHasFixedSize(true)
         view.recyclerView_regions.adapter = RegionAdapter(regionsList, this)
 
         return view

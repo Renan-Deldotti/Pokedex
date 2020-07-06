@@ -1,22 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/menu_topMenu"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_regions"
             android:icon="@drawable/ic_region"
-            android:title="Regions" />
+            android:title="@string/regions" />
         <item
             android:id="@+id/nav_pokemonList"
-            android:title="All Pokemon" />
+            android:title="@string/all_pokemon" />
         <item
             android:id="@+id/nav_items"
-            android:title="Items" />
+            android:title="@string/items" />
     </group>
-    <group>
+    <group
+        android:id="@+id/menu_bottomMenu"
+        android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_conf"
-            android:title="Configurations"/>
+            android:id="@+id/nav_settings"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_rate"
+            android:icon="@drawable/ic_star"
+            android:title="@string/rate" />
+        <item
+            android:id="@+id/nav_about"
+            android:title="@string/about" />
     </group>
 </menu>
