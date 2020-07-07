@@ -8,6 +8,15 @@
     android:paddingTop="?attr/actionBarSize"
     tools:context=".ui.region.RegionFragment">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/background_charizard"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_regions"
         android:layout_width="match_parent"
