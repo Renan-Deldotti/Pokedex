@@ -44,8 +44,29 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
                 }
                 fragmentRegionBinding.recyclerViewRegions.adapter = RegionAdapter(regionsList, this)
                 regions = it
+                updateDb()
             }
-            Log.e("TAG", "updateRegionsData: ")
+            //Log.e("TAG", "updateRegionsData: ")
+        })
+    }
+
+    private fun updateDb(){
+        val regionsToUpdate:ArrayList<br.com.renandeldotti.pokedex.database.Region> = ArrayList()
+        for(r in regions.results){
+            regionsToUpdate.add(br.com.renandeldotti.pokedex.database.Region(r.name,r.url))
+        }
+
+        for(r in regionsToUpdate){
+            Log.e("TEEWQNE",""+r.regionName)
+        }
+
+        regionViewModel.insertRegions(*regionsToUpdate.toTypedArray())
+        showData()
+    }
+    private fun showData(){
+        regionViewModel.getAllRegions().observe(viewLifecycleOwner, Observer {
+
+            Log.e("TESTE", "Data: $it")
         })
     }
 
