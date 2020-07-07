@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import br.com.renandeldotti.pokedex.R
 import kotlinx.android.synthetic.main.item_region.view.*
+import java.util.*
 
 class RegionAdapter(private val regionsList: List<String>, private val regionListener: RegionListener): RecyclerView.Adapter<RegionAdapter.RegionHolder>() {
 

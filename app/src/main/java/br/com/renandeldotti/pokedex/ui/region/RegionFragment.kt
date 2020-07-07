@@ -1,42 +1,55 @@
 package br.com.renandeldotti.pokedex.ui.region
 
-import android.graphics.Rect
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import br.com.renandeldotti.pokedex.R
-import kotlinx.android.synthetic.main.fragment_region.view.*
+import br.com.renandeldotti.pokedex.data.Region
+import br.com.renandeldotti.pokedex.databinding.FragmentRegionBinding
 
 
 class RegionFragment : Fragment(), RegionAdapter.RegionListener {
 
-    private lateinit var regionsList: List<String>
+    private lateinit var regionViewModel: RegionViewModel
+    private lateinit var regions:Region
+    //private var isConnectedToInternet:Boolean = false
+    private lateinit var fragmentRegionBinding: FragmentRegionBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        val view:View = inflater.inflate(R.layout.fragment_region, container, false)
+        fragmentRegionBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_region,container,false)
+        regionViewModel = ViewModelProvider(this).get(RegionViewModel::class.java)
 
-        regionsList = ArrayList()
-        (regionsList as ArrayList<String>).add("Kanto")
-        (regionsList as ArrayList<String>).add("Kanto")
-        (regionsList as ArrayList<String>).add("Kanto")
-        (regionsList as ArrayList<String>).add("Kanto")
-        (regionsList as ArrayList<String>).add("Kanto")
+        fragmentRegionBinding.recyclerViewRegions.layoutManager = GridLayoutManager(context,2)
+        fragmentRegionBinding.recyclerViewRegions.adapter = RegionAdapter(ArrayList(),this)
+        updateRegionsData()
 
-        view.recyclerView_regions.layoutManager = GridLayoutManager(context,2)
-        view.recyclerView_regions.adapter = RegionAdapter(regionsList, this)
-
-        return view
+        return fragmentRegionBinding.root
     }
 
-    companion object {
+    private fun updateRegionsData(){
+        regionViewModel.regionsMutableLiveData.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val regionsList = ArrayList<String>()
+                regionsList.clear()
+                for ( result in it.results){
+                    regionsList.add(result.name)
+                }
+                fragmentRegionBinding.recyclerViewRegions.adapter = RegionAdapter(regionsList, this)
+                regions = it
+            }
+            Log.e("TAG", "updateRegionsData: ")
+        })
     }
 
     override fun selectedRegion(position: Int) {
-        Toast.makeText(context, "test+"+regionsList[position], Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "test+"+regions.results[position].name, Toast.LENGTH_SHORT).show()
     }
 }
