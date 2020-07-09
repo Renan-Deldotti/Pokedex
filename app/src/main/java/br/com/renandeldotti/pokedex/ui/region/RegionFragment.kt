@@ -66,7 +66,7 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
     private fun showData(){
         regionViewModel.getAllRegions().observe(viewLifecycleOwner, Observer {
 
-            Log.e("TESTE", "Data: $it")
+            Log.e("TESTE", "Data: "+it[0].regionName)
         })
     }
 
