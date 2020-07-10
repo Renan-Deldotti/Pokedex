@@ -15,25 +15,17 @@ class PokeRepository(application: Application) {
         regionDao = database.regionDao
     }
 
-    fun getAllRegions():LiveData<List<Region>>{
-        return regionDao.getAllRegions()
-    }
+    fun getAllRegions():LiveData<List<Region>> = regionDao.getAllRegions()
 
-    fun insertRegions(vararg region: Region) {
+    fun renewRegionsData(vararg region: Region){
         uiScope.launch {
             withContext(Dispatchers.IO){
-                val returned = regionDao.insert(*region)
-                Log.e("OWENQOIENWQ", "teste = $returned")
+                regionDao.deleteAllRegions()
+                val idsReturned = regionDao.insert(*region)
+                Log.e("IDS_RETURNED", "$idsReturned")
             }
         }
     }
 
-    fun deleteRegions(){
-        val ioScope = CoroutineScope(Dispatchers.IO + repositoryJob)
-        ioScope.launch { regionDao.deleteAllRegions() }
-    }
-
-    fun cancelRepositoryJob(){
-        repositoryJob.cancel()
-    }
+    fun cancelRepositoryJobs() = repositoryJob.cancel()
 }

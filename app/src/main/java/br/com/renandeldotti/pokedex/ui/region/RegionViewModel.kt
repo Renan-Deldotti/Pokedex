@@ -17,6 +17,10 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
     private val pokeRepository:PokeRepository = PokeRepository(application)
     val regionsMutableLiveData:MutableLiveData<Region> = MutableLiveData()
 
+    companion object{
+        val TAG:String = RegionViewModel::class.java.simpleName
+    }
+
     init {
         fetchRegionsData()
     }
@@ -36,13 +40,14 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
         })
     }
 
-    fun insertRegions(vararg region: br.com.renandeldotti.pokedex.database.Region){
-        pokeRepository.insertRegions(*region)
-    }
-
     fun getAllRegions():LiveData<List<br.com.renandeldotti.pokedex.database.Region>> = pokeRepository.getAllRegions()
 
-    companion object{
-        val TAG:String = RegionViewModel::class.java.simpleName
+    fun renewRegions(vararg region: br.com.renandeldotti.pokedex.database.Region){
+        pokeRepository.renewRegionsData(*region)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        pokeRepository.cancelRepositoryJobs()
     }
 }
