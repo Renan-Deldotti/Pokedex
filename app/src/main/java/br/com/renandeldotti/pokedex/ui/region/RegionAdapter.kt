@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.renandeldotti.pokedex.R
 import kotlinx.android.synthetic.main.item_region.view.*
+import java.util.*
 
 class RegionAdapter(
     private val regionsList: List<String>,
@@ -23,8 +24,9 @@ class RegionAdapter(
         return regionsList.size
     }
 
+    @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: RegionHolder, position: Int) {
-        holder.textViewRegion.text = regionsList[position]
+        holder.textViewRegion.text = regionsList[position].capitalize(Locale.getDefault())
     }
 
     class RegionHolder(itemView: View, regionListener: RegionListener) :

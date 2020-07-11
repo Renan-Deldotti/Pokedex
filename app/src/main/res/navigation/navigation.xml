@@ -8,11 +8,21 @@
     <fragment
         android:id="@+id/nav_regions"
         android:name="br.com.renandeldotti.pokedex.ui.region.RegionFragment"
-        android:label="Regions"
+        android:label="@string/regions"
         tools:layout="@layout/fragment_region" />
     <fragment
         android:id="@+id/nav_pokemonList"
         android:name="br.com.renandeldotti.pokedex.ui.pokemonlist.PokemonListFragment"
-        android:label="Pokemon list"
+        android:label="@string/all_pokemon"
         tools:layout="@layout/fragment_pokemon_list" />
+    <fragment
+        android:id="@+id/nav_items"
+        android:name="br.com.renandeldotti.pokedex.ui.items.ItemsFragment"
+        android:label="@string/items"
+        tools:layout="@layout/items_fragment" />
+    <fragment
+        android:id="@+id/pokemonDetailFragment"
+        android:name="br.com.renandeldotti.pokedex.ui.pokemondetail.PokemonDetailFragment"
+        android:label="@string/details"
+        tools:layout="@layout/fragment_pokemon_detail" />
 </navigation>
