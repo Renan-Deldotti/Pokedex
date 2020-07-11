@@ -48,35 +48,12 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
                 }
                 fragmentRegionBinding.recyclerViewRegions.adapter = RegionAdapter(regionsList, this)
                 regions = it
-                updateDb()
             }
-            //Log.e("TAG", "updateRegionsData: ")
         })
     }
 
-    private fun updateDb(){
-        val regionsToUpdate:ArrayList<br.com.renandeldotti.pokedex.database.Region> = ArrayList()
-        for(r in regions.results){
-            regionsToUpdate.add(br.com.renandeldotti.pokedex.database.Region(r.name,r.url))
-        }
-
-        for(r in regionsToUpdate){
-            Log.e("TEEWQNE",""+r.regionName)
-        }
-
-        regionViewModel.renewRegions(*regionsToUpdate.toTypedArray())
-        showData()
-    }
-
-    private fun showData(){
-        regionViewModel.getAllRegions().observe(viewLifecycleOwner, Observer {
-            if (it != null && it.isNotEmpty()){
-                Log.e("Show_DATA","IT ->"+it.size )
-            }else{
-                Log.e("Show_DATA","IT -> $it" )
-            }
-        })
-        //test()
+    override fun selectedRegion(position: Int) {
+        Toast.makeText(context, "test+"+regions.results[position].name, Toast.LENGTH_SHORT).show()
     }
 
     /*private fun test(){
@@ -116,8 +93,4 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
         }
         return i
     }*/
-
-    override fun selectedRegion(position: Int) {
-        Toast.makeText(context, "test+"+regions.results[position].name, Toast.LENGTH_SHORT).show()
-    }
 }

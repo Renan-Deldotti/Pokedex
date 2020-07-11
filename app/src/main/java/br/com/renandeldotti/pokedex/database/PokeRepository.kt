@@ -1,21 +1,12 @@
 package br.com.renandeldotti.pokedex.database
 
 import android.app.Application
-import android.app.PendingIntent
 import android.content.Context
-import android.content.IntentFilter
-import android.database.Observable
 import android.net.ConnectivityManager
-import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
-import android.net.NetworkInfo
-import android.net.NetworkRequest
 import android.os.Build
-import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import br.com.renandeldotti.pokedex.Pokedex
 import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
 import br.com.renandeldotti.pokedex.data.Results
@@ -26,7 +17,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.log
 
 /*
     1º -> Should check the connectivity

@@ -22,10 +22,6 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getAllRegions():LiveData<List<br.com.renandeldotti.pokedex.database.Region>> = pokeRepository.getAllRegions()
 
-    fun renewRegions(vararg region: br.com.renandeldotti.pokedex.database.Region){
-        //pokeRepository.renewRegionsData(*region)
-    }
-
     override fun onCleared() {
         super.onCleared()
         pokeRepository.cancelRepositoryJobs()
