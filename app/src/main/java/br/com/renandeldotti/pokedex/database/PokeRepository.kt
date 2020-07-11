@@ -93,12 +93,6 @@ class PokeRepository(private val application: Application) {
         }
     }
 
-    private fun updateLastUpdatedPreference(){
-        val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
-        sharedPreferencesEditor.putLong(REGIONS_LAST_UPDATED, Date().time)
-        sharedPreferencesEditor.apply()
-    }
-
     private fun fetchRegionsData(storedSize:Int = -1){
         val regionCall: Call<br.com.renandeldotti.pokedex.data.Region> = pokeApi.getPokeApi().getRegions()
         regionCall.enqueue(object : Callback<br.com.renandeldotti.pokedex.data.Region> {
@@ -130,10 +124,16 @@ class PokeRepository(private val application: Application) {
                     formattedList.add(Region(it.name, it.url))
                 }
                 val idsReturned = regionDao.insert(*formattedList.toTypedArray())
-                Log.e("IDS_RETURNED", "$idsReturned")
+                Log.e(TAG, "IDS_RETURNED -> $idsReturned")
             }
         }
         updateLastUpdatedPreference()
+    }
+
+    private fun updateLastUpdatedPreference(){
+        val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
+        sharedPreferencesEditor.putLong(REGIONS_LAST_UPDATED, Date().time)
+        sharedPreferencesEditor.apply()
     }
 
     fun getAllRegions():LiveData<List<Region>> = regionDao.getAllRegions()

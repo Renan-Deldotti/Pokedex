@@ -10,9 +10,11 @@
             android:title="@string/regions" />
         <item
             android:id="@+id/nav_pokemonList"
+            android:icon="@drawable/ic_pokemon"
             android:title="@string/all_pokemon" />
         <item
             android:id="@+id/nav_items"
+            android:icon="@drawable/ic_items"
             android:title="@string/items" />
     </group>
     <group
@@ -20,6 +22,7 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_settings"
             android:title="@string/settings" />
         <item
             android:id="@+id/nav_rate"
@@ -27,6 +30,7 @@
             android:title="@string/rate" />
         <item
             android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info"
             android:title="@string/about" />
     </group>
 </menu>
