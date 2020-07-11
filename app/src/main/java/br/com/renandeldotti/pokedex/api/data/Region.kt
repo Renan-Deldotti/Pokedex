@@ -1,4 +1,4 @@
-package br.com.renandeldotti.pokedex.data
+package br.com.renandeldotti.pokedex.api.data
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

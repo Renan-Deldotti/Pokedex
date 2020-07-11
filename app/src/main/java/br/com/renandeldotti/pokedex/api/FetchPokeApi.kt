@@ -1,6 +1,6 @@
 package br.com.renandeldotti.pokedex.api
 
-import br.com.renandeldotti.pokedex.data.Region
+import br.com.renandeldotti.pokedex.api.data.Region
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -9,7 +9,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import br.com.renandeldotti.pokedex.Pokedex
 import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
-import br.com.renandeldotti.pokedex.data.Results
+import br.com.renandeldotti.pokedex.api.data.Results
 import br.com.renandeldotti.pokedex.ui.region.RegionViewModel
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -94,13 +94,13 @@ class PokeRepository(private val application: Application) {
     }
 
     private fun fetchRegionsData(storedSize:Int = -1){
-        val regionCall: Call<br.com.renandeldotti.pokedex.data.Region> = pokeApi.getPokeApi().getRegions()
-        regionCall.enqueue(object : Callback<br.com.renandeldotti.pokedex.data.Region> {
-            override fun onFailure(call: Call<br.com.renandeldotti.pokedex.data.Region>, t: Throwable) {
+        val regionCall: Call<br.com.renandeldotti.pokedex.api.data.Region> = pokeApi.getPokeApi().getRegions()
+        regionCall.enqueue(object : Callback<br.com.renandeldotti.pokedex.api.data.Region> {
+            override fun onFailure(call: Call<br.com.renandeldotti.pokedex.api.data.Region>, t: Throwable) {
                 Log.e(RegionViewModel.TAG,"Error: "+t.message)
             }
 
-            override fun onResponse(call: Call<br.com.renandeldotti.pokedex.data.Region>, response: Response<br.com.renandeldotti.pokedex.data.Region>) {
+            override fun onResponse(call: Call<br.com.renandeldotti.pokedex.api.data.Region>, response: Response<br.com.renandeldotti.pokedex.api.data.Region>) {
                 response.body()?.run {
                     if (storedSize == -1) {
                         renewRegionsData(this.results)
