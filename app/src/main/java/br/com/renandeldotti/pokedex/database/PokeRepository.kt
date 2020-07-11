@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.PendingIntent
 import android.content.Context
 import android.content.IntentFilter
+import android.database.Observable
 import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
@@ -13,9 +14,19 @@ import android.os.Build
 import android.os.Handler
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import br.com.renandeldotti.pokedex.Pokedex
+import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
+import br.com.renandeldotti.pokedex.data.Results
+import br.com.renandeldotti.pokedex.ui.region.RegionViewModel
 import kotlinx.coroutines.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.log
 
 /*
     1º -> Should check the connectivity
@@ -28,6 +39,7 @@ import java.util.*
     4º -> Show info from the database
  */
 class PokeRepository(private val application: Application) {
+    private val pokeApi: RetrofitPokeApi = RetrofitPokeApi()
     private var regionDao:RegionDao
     private var repositoryJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + repositoryJob)
@@ -45,6 +57,7 @@ class PokeRepository(private val application: Application) {
         regionDao = database.regionDao
 
         hasInternet = checkInternet()
+        checkLastUpdated()
     }
 
     private fun checkInternet():Boolean{
@@ -61,46 +74,79 @@ class PokeRepository(private val application: Application) {
         return false
     }
 
-    private fun getRegions(){
-        if(hasInternet){
-            //
+    /**
+     * Should update only if has internet and the last update was before
+     * 5 days or (1 day + changes)
+     */
+    private fun checkLastUpdated(){
+        if (!hasInternet){
+            return
         }
-    }
-
-    fun getAllRegions():LiveData<List<Region>> = regionDao.getAllRegions()
-
-    fun renewRegionsData(vararg region: Region){
-        uiScope.launch {
-            withContext(Dispatchers.IO){
-                regionDao.deleteAllRegions()
-                val idsReturned = regionDao.insert(*region)
-                Log.e("IDS_RETURNED", "$idsReturned")
-            }
-        }
-
-        updateLastUpdatedPreference()
-    }
-
-    /*private fun checkLastUpdated(){
         val sharedPreferences = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE)
         if (sharedPreferences.contains(REGIONS_LAST_UPDATED)){
             val lastUpdated = sharedPreferences.getLong(REGIONS_LAST_UPDATED, 0)
-            if ((Date().time - lastUpdated) >= ONE_DAY_IN_MILLI){
-                // Should update
-                updateLastUpdatedPreference()
-            }else if ()
+            if ((Date().time - lastUpdated) >= FIVE_DAYS_IN_MILLI){
+                fetchRegionsData()
+                //fetchPokemonData()
+            }else if ((Date().time - lastUpdated) >= ONE_DAY_IN_MILLI){
+                uiScope.launch {
+                    var qnt = 0
+                    withContext(Dispatchers.IO){
+                        qnt = regionDao.getQuantityOfRegions()
+                    }
+                    fetchRegionsData(qnt)
+                }
+            }
         }else{
             // Do not have any data yet - Should update
-            //renewRegionsData()
-            updateLastUpdatedPreference()
+            fetchRegionsData()
         }
-    }*/
+    }
 
     private fun updateLastUpdatedPreference(){
         val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
         sharedPreferencesEditor.putLong(REGIONS_LAST_UPDATED, Date().time)
         sharedPreferencesEditor.apply()
     }
+
+    private fun fetchRegionsData(storedSize:Int = -1){
+        val regionCall: Call<br.com.renandeldotti.pokedex.data.Region> = pokeApi.getPokeApi().getRegions()
+        regionCall.enqueue(object : Callback<br.com.renandeldotti.pokedex.data.Region> {
+            override fun onFailure(call: Call<br.com.renandeldotti.pokedex.data.Region>, t: Throwable) {
+                Log.e(RegionViewModel.TAG,"Error: "+t.message)
+            }
+
+            override fun onResponse(call: Call<br.com.renandeldotti.pokedex.data.Region>, response: Response<br.com.renandeldotti.pokedex.data.Region>) {
+                response.body()?.run {
+                    if (storedSize == -1) {
+                        renewRegionsData(this.results)
+                    }else{
+                        //Log.e(TAG, "storedSize = $storedSize this.results.size = ${this.results.size}")
+                        if(storedSize != this.results.size){
+                            renewRegionsData(this.results)
+                        }
+                    }
+                }
+            }
+        })
+    }
+
+    fun renewRegionsData(list:List<Results>){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                regionDao.deleteAllRegions()
+                val formattedList = ArrayList<Region>()
+                list.forEach{
+                    formattedList.add(Region(it.name, it.url))
+                }
+                val idsReturned = regionDao.insert(*formattedList.toTypedArray())
+                Log.e("IDS_RETURNED", "$idsReturned")
+            }
+        }
+        updateLastUpdatedPreference()
+    }
+
+    fun getAllRegions():LiveData<List<Region>> = regionDao.getAllRegions()
 
     fun cancelRepositoryJobs() = repositoryJob.cancel()
 }

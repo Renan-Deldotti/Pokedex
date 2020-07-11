@@ -13,4 +13,7 @@ interface RegionDao {
 
     @Query("SELECT * FROM regions_table ORDER BY regionName")
     fun getAllRegions():LiveData<List<Region>>
+
+    @Query("SELECT COUNT(*) FROM regions_table")
+    suspend fun getQuantityOfRegions():Int
 }

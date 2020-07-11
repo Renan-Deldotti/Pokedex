@@ -13,7 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class RegionViewModel(application: Application) : AndroidViewModel(application) {
-    private val pokeApi:RetrofitPokeApi = RetrofitPokeApi()
     private val pokeRepository:PokeRepository = PokeRepository(application)
     val regionsMutableLiveData:MutableLiveData<Region> = MutableLiveData()
 
@@ -21,29 +20,10 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
         val TAG:String = RegionViewModel::class.java.simpleName
     }
 
-    init {
-        fetchRegionsData()
-    }
-
-    private fun fetchRegionsData(){
-        val regionCall:Call<Region> = pokeApi.getPokeApi().getRegions()
-        regionCall.enqueue(object : Callback<Region>{
-            override fun onFailure(call: Call<Region>, t: Throwable) {
-                Log.e(TAG,"Error: "+t.message)
-            }
-
-            override fun onResponse(call: Call<Region>, response: Response<Region>) {
-                response.body()?.let {
-                    regionsMutableLiveData.postValue(it)
-                }
-            }
-        })
-    }
-
     fun getAllRegions():LiveData<List<br.com.renandeldotti.pokedex.database.Region>> = pokeRepository.getAllRegions()
 
     fun renewRegions(vararg region: br.com.renandeldotti.pokedex.database.Region){
-        pokeRepository.renewRegionsData(*region)
+        //pokeRepository.renewRegionsData(*region)
     }
 
     override fun onCleared() {
