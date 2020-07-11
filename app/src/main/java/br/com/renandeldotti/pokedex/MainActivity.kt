@@ -28,7 +28,9 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = activityMainBinding.navigationView
         navController = findNavController(R.id.fragment_nav_host)
         configuration =
-            AppBarConfiguration(setOf(R.id.nav_regions, R.id.nav_pokemonList, R.id.nav_items), drawerLayout)
+            AppBarConfiguration(
+                setOf(R.id.nav_regions, R.id.nav_pokemonList, R.id.nav_items),
+                drawerLayout)
         setupActionBarWithNavController(navController, configuration)
         navView.setupWithNavController(navController)
     }
