@@ -37,7 +37,7 @@ class PokeRepository(private val application: Application) {
     private var hasInternet:Boolean = false
 
     companion object{
-        private const val TAG:String = "PokeRepository"
+        //private const val TAG:String = "PokeRepository"
         private const val REGIONS_LAST_UPDATED:String = "REGIONS_LAST_UPDATED"
         private const val ONE_DAY_IN_MILLI:Long = 86400000L
         private const val FIVE_DAYS_IN_MILLI:Long = 432000000L
@@ -122,18 +122,17 @@ class PokeRepository(private val application: Application) {
                 regionDao.deleteAllRegions()
                 val formattedList = ArrayList<Region>()
                 list.forEach{
-                    var id: String
-                    try {
-                        id = URI(it.url).path.substringBeforeLast('/').substringAfterLast('/')
+                    val id: Int = try {
                         // Test to see if its an integer if not then it will thrown an exception
-                        val newId = id.toInt()
+                        URI(it.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
                     }catch (e: Exception){
-                        id = "1"
+                        1
                     }
-                    formattedList.add(Region(it.name, id))
+                    formattedList.add(Region(it.name, id.toString()))
                 }
-                val idsReturned = regionDao.insert(*formattedList.toTypedArray())
-                Log.e(TAG, "IDS_RETURNED -> $idsReturned")
+                regionDao.insert(*formattedList.toTypedArray())
+                //val idsReturned = regionDao.insert(*formattedList.toTypedArray())
+                //Log.e(TAG, "IDS_RETURNED -> $idsReturned")
             }
         }
         updateLastUpdatedPreference()
