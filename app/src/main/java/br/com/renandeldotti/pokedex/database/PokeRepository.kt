@@ -106,7 +106,6 @@ class PokeRepository(private val application: Application) {
                     if (storedSize == -1) {
                         renewRegionsData(this.results)
                     }else{
-                        //Log.e(TAG, "storedSize = $storedSize this.results.size = ${this.results.size}")
                         if(storedSize != this.results.size){
                             renewRegionsData(this.results)
                         }
