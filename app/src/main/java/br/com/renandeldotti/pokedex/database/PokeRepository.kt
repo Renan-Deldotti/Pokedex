@@ -15,6 +15,7 @@ import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URI
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -121,7 +122,15 @@ class PokeRepository(private val application: Application) {
                 regionDao.deleteAllRegions()
                 val formattedList = ArrayList<Region>()
                 list.forEach{
-                    formattedList.add(Region(it.name, it.url))
+                    var id: String
+                    try {
+                        id = URI(it.url).path.substringBeforeLast('/').substringAfterLast('/')
+                        // Test to see if its an integer if not then it will thrown an exception
+                        val newId = id.toInt()
+                    }catch (e: Exception){
+                        id = "1"
+                    }
+                    formattedList.add(Region(it.name, id))
                 }
                 val idsReturned = regionDao.insert(*formattedList.toTypedArray())
                 Log.e(TAG, "IDS_RETURNED -> $idsReturned")

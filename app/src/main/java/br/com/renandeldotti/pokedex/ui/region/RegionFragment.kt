@@ -1,6 +1,7 @@
 package br.com.renandeldotti.pokedex.ui.region
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
 import br.com.renandeldotti.pokedex.database.Region
 import br.com.renandeldotti.pokedex.databinding.FragmentRegionBinding
+import java.net.URI
 
 
 class RegionFragment : Fragment(), RegionAdapter.RegionListener {
@@ -33,6 +35,10 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
         return fragmentRegionBinding.root
     }
 
+    companion object{
+        private const val TAG:String = "RegionFragment"
+    }
+
     private fun updateRegionsData(){
         regionViewModel.getRegions().observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -47,7 +53,7 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
     }
 
     override fun selectedRegion(position: Int) {
-        Toast.makeText(context, "Name: ${regions[position].regionName}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Name: ${regions[position].regionName}  ID: ${regions[position].regionId}", Toast.LENGTH_SHORT).show()
     }
 
     /*private fun test(){
