@@ -1,6 +1,7 @@
 package br.com.renandeldotti.pokedex.ui.region
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -55,7 +56,14 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
 
     override fun selectedRegion(position: Int) {
         //Toast.makeText(context, "Name: ${regions[position].regionName}  ID: ${regions[position].regionId}", Toast.LENGTH_SHORT).show()
-        findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(regions[position].regionId))
+        regionViewModel.getPokedexesFromRegion(regions[position].regionId).observe(viewLifecycleOwner, Observer {
+            if(!it.pokedexes.isNullOrEmpty()){
+                val pokedexId:String = URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/')
+                if (!TextUtils.isEmpty(pokedexId)){
+                    findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(pokedexId))
+                }
+            }
+        })
     }
 
     /*private fun test(){

@@ -2,6 +2,7 @@ package br.com.renandeldotti.pokedex.api
 
 import br.com.renandeldotti.pokedex.api.data.PokemonListFromApi
 import br.com.renandeldotti.pokedex.api.data.Region
+import br.com.renandeldotti.pokedex.api.data.RegionPokedexes
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,8 +15,8 @@ interface FetchPokeApi {
     fun getRegions(): Call<Region>
 
     //Get the Pokedexes from a defined region
-    @GET("regions/{id}")
-    fun getPokedexesFromRegion(@Path("id") regionId: Int)
+    @GET("region/{id}")
+    fun getPokedexesFromRegion(@Path("id") regionId: String): Call<RegionPokedexes>
 
     //Get all Pokemon from a Pokedex
     @GET("pokedex/{id}/")
