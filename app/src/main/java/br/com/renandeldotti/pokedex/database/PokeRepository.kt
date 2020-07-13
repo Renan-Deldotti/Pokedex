@@ -10,7 +10,6 @@ import androidx.lifecycle.LiveData
 import br.com.renandeldotti.pokedex.Pokedex
 import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
 import br.com.renandeldotti.pokedex.api.data.Results
-import br.com.renandeldotti.pokedex.ui.region.RegionViewModel
 import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,6 +40,7 @@ class PokeRepository(private val application: Application) {
         private const val REGIONS_LAST_UPDATED:String = "REGIONS_LAST_UPDATED"
         private const val ONE_DAY_IN_MILLI:Long = 86400000L
         private const val FIVE_DAYS_IN_MILLI:Long = 432000000L
+        private const val TAG:String = "PokeRepository"
     }
 
     init {
@@ -98,7 +98,7 @@ class PokeRepository(private val application: Application) {
         val regionCall: Call<br.com.renandeldotti.pokedex.api.data.Region> = pokeApi.getPokeApi().getRegions()
         regionCall.enqueue(object : Callback<br.com.renandeldotti.pokedex.api.data.Region> {
             override fun onFailure(call: Call<br.com.renandeldotti.pokedex.api.data.Region>, t: Throwable) {
-                Log.e(RegionViewModel.TAG,"Error: "+t.message)
+                Log.e(TAG,"Error: "+t.message)
             }
 
             override fun onResponse(call: Call<br.com.renandeldotti.pokedex.api.data.Region>, response: Response<br.com.renandeldotti.pokedex.api.data.Region>) {

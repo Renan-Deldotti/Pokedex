@@ -1,6 +1,7 @@
 package br.com.renandeldotti.pokedex.ui.pokemonlist
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,9 +21,13 @@ class PokemonListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pokemon_list, container, false)
         viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
-        //PokemonListFragmentArgs.fromBundle(requireArguments()?.extras)
+        //val id = PokemonListFragmentArgs.fromBundle(requireArguments()).pokedexId
         val args: PokemonListFragmentArgs by navArgs()
-        Log.e("TAG", "onCreateView: ${args.pokedexId}")
+        val pokedexId = args.pokedexId
+        //Log.e("TAG", "onCreateView: $pokedexId" )
+        if (!TextUtils.isEmpty(pokedexId) && !pokedexId.equals("0")){
+            //
+        }
 
         return binding.root
     }

@@ -22,7 +22,8 @@
         <argument
             android:name="pokedexId"
             app:argType="string"
-            app:nullable="true" />
+            app:nullable="true"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/nav_items"

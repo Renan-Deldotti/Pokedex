@@ -18,7 +18,7 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
     private val pokeRepository:PokeRepository = PokeRepository(application)
 
     companion object{
-        val TAG:String = RegionViewModel::class.java.simpleName
+        private val TAG:String = RegionViewModel::class.java.simpleName
     }
 
     fun getRegions(): LiveData<List<Region>> = pokeRepository.getAllRegions()
