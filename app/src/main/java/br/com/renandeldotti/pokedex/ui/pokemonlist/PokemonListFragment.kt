@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
 import br.com.renandeldotti.pokedex.api.data.PokemonEntries
 import br.com.renandeldotti.pokedex.databinding.FragmentPokemonListBinding
+import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,7 +45,13 @@ class PokemonListFragment : Fragment() {
         }else{
             updateRecyclerViewData("1")
         }
-        activity?.title = args.pokedexName
+        if (activity != null) {
+            if (!TextUtils.isEmpty(args.pokedexName)) {
+                activity?.toolbar?.title = args.pokedexName?.toUpperCase(Locale.getDefault())
+            }else{
+                activity?.setTitle(R.string.all_pokemon)
+            }
+        }
         return binding.root
     }
 
