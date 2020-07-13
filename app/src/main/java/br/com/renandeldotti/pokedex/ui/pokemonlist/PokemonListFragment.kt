@@ -15,12 +15,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
 import br.com.renandeldotti.pokedex.api.data.PokemonEntries
 import br.com.renandeldotti.pokedex.databinding.FragmentPokemonListBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
 class PokemonListFragment : Fragment() {
 
     private lateinit var binding: FragmentPokemonListBinding
     private lateinit var viewModel: PokemonListViewModel
     private lateinit var adapter: PokemonListAdapter
+    private val args: PokemonListFragmentArgs by navArgs()
 
     companion object {
         private val TAG:String = PokemonListFragment::class.java.simpleName
@@ -30,17 +33,18 @@ class PokemonListFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pokemon_list, container, false)
         viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
         //val id = PokemonListFragmentArgs.fromBundle(requireArguments()).pokedexId
-        val args: PokemonListFragmentArgs by navArgs()
         val pokedexId = args.pokedexId
         //Log.e("TAG", "onCreateView: $pokedexId" )
         binding.recyclerViewPokemonListAll.layoutManager = GridLayoutManager(context,2)
         binding.recyclerViewPokemonListAll.setHasFixedSize(true)
         adapter = PokemonListAdapter(ArrayList())
         binding.recyclerViewPokemonListAll.adapter = adapter
-        if (pokedexId != null && !TextUtils.isEmpty(pokedexId) && pokedexId != "0"){
+        if (pokedexId != null && !TextUtils.isEmpty(pokedexId) && pokedexId != "0" && pokedexId != "1"){
             updateRecyclerViewData(pokedexId)
+        }else{
+            updateRecyclerViewData("1")
         }
-
+        activity?.title = args.pokedexName
         return binding.root
     }
 

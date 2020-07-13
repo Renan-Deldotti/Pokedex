@@ -60,7 +60,7 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
             if(!it.pokedexes.isNullOrEmpty()){
                 val pokedexId:String = URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/')
                 if (!TextUtils.isEmpty(pokedexId)){
-                    findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(pokedexId))
+                    findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(pokedexId, regions[position].regionName))
                 }
             }
         })

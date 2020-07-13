@@ -21,9 +21,14 @@
         tools:layout="@layout/fragment_pokemon_list">
         <argument
             android:name="pokedexId"
+            android:defaultValue="0"
             app:argType="string"
-            app:nullable="true"
-            android:defaultValue="0" />
+            app:nullable="true" />
+        <argument
+            android:name="pokedexName"
+            android:defaultValue="All pokemon"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
     <fragment
         android:id="@+id/nav_items"
