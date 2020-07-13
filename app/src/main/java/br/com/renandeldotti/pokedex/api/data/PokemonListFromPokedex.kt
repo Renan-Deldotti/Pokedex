@@ -5,6 +5,10 @@ data class PokemonListFromPokedex(
 )
 
 data class PokemonEntries(
+    val pokemon_species: PokemonSpecies
+)
+
+data class PokemonSpecies(
     val name: String,
     val url: String
 )

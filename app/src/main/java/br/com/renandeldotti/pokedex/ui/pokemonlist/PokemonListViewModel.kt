@@ -34,6 +34,7 @@ class PokemonListViewModel(application: Application) : AndroidViewModel(applicat
             ) {
                 response.body()?.let {
                     tempData.postValue(it)
+                    //Log.e(TAG, "onResponse: $it")
                 }
             }
         })

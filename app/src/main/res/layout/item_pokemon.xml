@@ -14,11 +14,13 @@
         app:cardUseCompatPadding="true">
 
         <LinearLayout
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/item_pokemon_imageView"
                 android:layout_width="100dp"
                 android:layout_height="0dp"
                 android:layout_gravity="center"
@@ -28,9 +30,11 @@
                 tools:src="@drawable/ditto_shiny_placeholder" />
 
             <TextView
+                android:id="@+id/item_pokemon_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 tools:text="Ditto" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>

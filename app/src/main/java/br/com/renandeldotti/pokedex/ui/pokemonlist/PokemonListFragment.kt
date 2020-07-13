@@ -8,15 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
+import br.com.renandeldotti.pokedex.api.data.PokemonEntries
 import br.com.renandeldotti.pokedex.databinding.FragmentPokemonListBinding
 
 class PokemonListFragment : Fragment() {
 
     private lateinit var binding: FragmentPokemonListBinding
     private lateinit var viewModel: PokemonListViewModel
+    private lateinit var adapter: PokemonListAdapter
+
+    companion object {
+        private val TAG:String = PokemonListFragment::class.java.simpleName
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pokemon_list, container, false)
@@ -25,13 +33,24 @@ class PokemonListFragment : Fragment() {
         val args: PokemonListFragmentArgs by navArgs()
         val pokedexId = args.pokedexId
         //Log.e("TAG", "onCreateView: $pokedexId" )
-        if (!TextUtils.isEmpty(pokedexId) && !pokedexId.equals("0")){
-            //
+        binding.recyclerViewPokemonListAll.layoutManager = GridLayoutManager(context,2)
+        binding.recyclerViewPokemonListAll.setHasFixedSize(true)
+        adapter = PokemonListAdapter(ArrayList())
+        binding.recyclerViewPokemonListAll.adapter = adapter
+        if (pokedexId != null && !TextUtils.isEmpty(pokedexId) && pokedexId != "0"){
+            updateRecyclerViewData(pokedexId)
         }
 
         return binding.root
     }
 
-    companion object {
+    private fun updateRecyclerViewData(pokedexId: String){
+        viewModel.getPokemonListFromPokedex(pokedexId).observe(viewLifecycleOwner, Observer {
+            //Log.e(TAG, "ID: $pokedexId\tData: $it ")
+            if (!it.pokemon_entries.isNullOrEmpty()){
+                adapter = PokemonListAdapter(it.pokemon_entries)
+                binding.recyclerViewPokemonListAll.adapter = adapter
+            }
+        })
     }
 }
