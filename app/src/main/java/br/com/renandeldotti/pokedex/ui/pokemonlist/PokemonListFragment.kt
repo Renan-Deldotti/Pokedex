@@ -20,7 +20,7 @@ class PokemonListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_pokemon_list, container, false)
         viewModel = ViewModelProvider(this)[PokemonListViewModel::class.java]
-        //PokemonListFragmentArgs.fromBundle(requireArguments())
+        //PokemonListFragmentArgs.fromBundle(requireArguments()?.extras)
         val args: PokemonListFragmentArgs by navArgs()
         Log.e("TAG", "onCreateView: ${args.pokedexId}")
 
