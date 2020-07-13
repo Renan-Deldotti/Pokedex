@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
 import br.com.renandeldotti.pokedex.database.Region
@@ -53,7 +54,8 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
     }
 
     override fun selectedRegion(position: Int) {
-        Toast.makeText(context, "Name: ${regions[position].regionName}  ID: ${regions[position].regionId}", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(context, "Name: ${regions[position].regionName}  ID: ${regions[position].regionId}", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(regions[position].regionId))
     }
 
     /*private fun test(){

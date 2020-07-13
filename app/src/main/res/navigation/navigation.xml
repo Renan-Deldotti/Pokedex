@@ -9,12 +9,21 @@
         android:id="@+id/nav_regions"
         android:name="br.com.renandeldotti.pokedex.ui.region.RegionFragment"
         android:label="@string/regions"
-        tools:layout="@layout/fragment_region" />
+        tools:layout="@layout/fragment_region">
+        <action
+            android:id="@+id/action_open_pokemonList_from_region"
+            app:destination="@id/nav_pokemonList" />
+    </fragment>
     <fragment
         android:id="@+id/nav_pokemonList"
         android:name="br.com.renandeldotti.pokedex.ui.pokemonlist.PokemonListFragment"
         android:label="@string/all_pokemon"
-        tools:layout="@layout/fragment_pokemon_list" />
+        tools:layout="@layout/fragment_pokemon_list">
+        <argument
+            android:name="pokedexId"
+            app:argType="string"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/nav_items"
         android:name="br.com.renandeldotti.pokedex.ui.items.ItemsFragment"

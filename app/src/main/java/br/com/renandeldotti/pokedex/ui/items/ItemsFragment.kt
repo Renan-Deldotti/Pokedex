@@ -1,11 +1,11 @@
 package br.com.renandeldotti.pokedex.ui.items
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import br.com.renandeldotti.pokedex.R
 
 class ItemsFragment : Fragment() {
@@ -25,7 +25,7 @@ class ItemsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(ItemsViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ItemsViewModel::class.java)
         // TODO: Use the ViewModel
     }
 
