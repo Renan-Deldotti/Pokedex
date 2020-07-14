@@ -2,6 +2,7 @@ package br.com.renandeldotti.pokedex.ui.pokemonlist
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -45,14 +46,11 @@ class PokemonListFragment : Fragment() {
         }else{
             updateRecyclerViewData("1")
         }
-        if (activity != null) {
-            if (!TextUtils.isEmpty(args.pokedexName)) {
-                //activity?.toolbar?.title = args.pokedexName?.toUpperCase(Locale.getDefault())
-                val newTitle: String? = args.pokedexName?.toUpperCase(Locale.getDefault())
-                (activity as MainActivity).changeAppBarTitle(newTitle?:getString(R.string.all_pokemon))
-            }else{
-                (activity as MainActivity).changeAppBarTitle(getString(R.string.all_pokemon))
-            }
+        activity?.let {
+            val newTitle:String =
+                if(args.pokedexName.isNullOrEmpty()) getString(R.string.all_pokemon)
+                else args.pokedexName?.toUpperCase(Locale.getDefault())!!
+            (it as MainActivity).changeAppBarTitle(newTitle)
         }
         return binding.root
     }
