@@ -13,6 +13,9 @@
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorBlackLight"
+            android:fitsSystemWindows="true"
+            app:statusBarBackground="@color/colorBlackLight"
             tools:context=".MainActivity">
 
             <com.google.android.material.appbar.AppBarLayout
@@ -24,7 +27,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
+                    android:background="@color/colorBlackLight"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             </com.google.android.material.appbar.AppBarLayout>
