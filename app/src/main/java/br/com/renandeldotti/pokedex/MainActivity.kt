@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setContentView(activityMainBinding.root)
-        val toolbar: Toolbar = activityMainBinding.toolbar
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = activityMainBinding.drawerLayout
@@ -37,5 +37,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(configuration) || super.onSupportNavigateUp()
+    }
+
+    fun changeAppBar(toolbar: Toolbar){
+        //Log.e("TAG", "changeAppBar: " )
+        setSupportActionBar(toolbar)
+        setupActionBarWithNavController(navController, configuration)
+    }
+
+    fun changeAppBarTitle(title: String){
+        supportActionBar?.title = title
     }
 }

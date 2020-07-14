@@ -2,18 +2,18 @@ package br.com.renandeldotti.pokedex.ui.pokemonlist
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
+import br.com.renandeldotti.pokedex.MainActivity
 import br.com.renandeldotti.pokedex.R
-import br.com.renandeldotti.pokedex.api.data.PokemonEntries
 import br.com.renandeldotti.pokedex.databinding.FragmentPokemonListBinding
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -47,9 +47,11 @@ class PokemonListFragment : Fragment() {
         }
         if (activity != null) {
             if (!TextUtils.isEmpty(args.pokedexName)) {
-                activity?.toolbar?.title = args.pokedexName?.toUpperCase(Locale.getDefault())
+                //activity?.toolbar?.title = args.pokedexName?.toUpperCase(Locale.getDefault())
+                val newTitle: String? = args.pokedexName?.toUpperCase(Locale.getDefault())
+                (activity as MainActivity).changeAppBarTitle(newTitle?:getString(R.string.all_pokemon))
             }else{
-                activity?.setTitle(R.string.all_pokemon)
+                (activity as MainActivity).changeAppBarTitle(getString(R.string.all_pokemon))
             }
         }
         return binding.root
