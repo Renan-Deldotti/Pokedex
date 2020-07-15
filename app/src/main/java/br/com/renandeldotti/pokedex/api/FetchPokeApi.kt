@@ -27,7 +27,7 @@ interface FetchPokeApi {
 
     //Get pokemon description
     @GET("pokemon-species/{id}")
-    fun getPokemonDesc(@Path("id") pokemonID: String)
+    fun getPokemonDesc(@Path("id") pokemonID: String): Call<PokemonDescriptionFromApi>
 
     //Get all pokemon
     @GET("pokemon")

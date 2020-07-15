@@ -54,6 +54,12 @@ class PokemonDetailFragment : Fragment() {
             changeImage()
         })
 
+        viewModel.getPokemonDesc(args.pokemonId).observe(viewLifecycleOwner, Observer {
+            if (!it.flavor_text_entries.isNullOrEmpty()){
+                binding.pokemonDescription.text = it.flavor_text_entries[0].flavor_text
+            }
+        })
+
         binding.pokemonDetailSwitchShiny.setOnCheckedChangeListener { _, _ ->
             changeImage()
         }
