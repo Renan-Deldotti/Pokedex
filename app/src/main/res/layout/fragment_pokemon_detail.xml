@@ -3,6 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="pokemonName"
+            type="String" />
+        <variable
+            name="pokemonId"
+            type="String" />
+        <variable
+            name="pokemonType"
+            type="String" />
+        <variable
+            name="textChangedColor"
+            type="Integer" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -36,8 +51,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:text="@{pokemonName}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     android:textSize="32sp"
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonImage"
@@ -49,8 +65,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:textAlignment="center"
+                    android:text="@{pokemonId}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/pokemon_detail_switchShiny_label"
                     app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +81,7 @@
                     android:maxLines="1"
                     android:text="@string/shiny"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/pokemon_detail_pokemonId"
@@ -74,7 +91,6 @@
                     android:id="@+id/pokemon_detail_switchShiny"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryTextLight"
                     app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_switchShiny_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.1"
@@ -89,7 +105,7 @@
                     android:text="@string/type"
                     android:textAlignment="viewEnd"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toStartOf="@id/pokemon_detail_type"
                     app:layout_constraintStart_toStartOf="parent"
@@ -101,8 +117,9 @@
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="8dp"
                     android:textAlignment="viewStart"
+                    android:text="@{pokemonType}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/pokemon_detail_type_label"
@@ -117,7 +134,7 @@
                     android:text="@string/description"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
                     app:layout_constraintTop_toBottomOf="@id/pokemon_detail_type_label" />
 
@@ -128,7 +145,7 @@
                     android:layout_marginTop="16dp"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="@color/colorPrimaryTextLight"
+                    android:textColor="@{textChangedColor}"
                     app:layout_constraintTop_toBottomOf="@id/pokemon_description_label"
                     tools:maxLines="15"
                     tools:text="@tools:sample/lorem/random" />

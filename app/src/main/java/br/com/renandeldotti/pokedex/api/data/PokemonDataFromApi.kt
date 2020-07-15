@@ -3,6 +3,7 @@ package br.com.renandeldotti.pokedex.api.data
 data class PokemonDataFromApi(
     val base_experience : Int,
     val height : Int,
+    val id : Int,
     val name : String,
     val stats : List<Stats>,
     val types : List<Types>,
