@@ -4,15 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="pokemonName"
             type="String" />
+
         <variable
             name="pokemonId"
             type="String" />
+
         <variable
             name="pokemonType"
             type="String" />
+
         <variable
             name="textChangedColor"
             type="Integer" />
@@ -33,7 +37,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp">
 
                 <ImageView
                     android:id="@+id/pokemon_detail_pokemonImage"
@@ -64,8 +69,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:textAlignment="center"
                     android:text="@{pokemonId}"
+                    android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
@@ -116,8 +121,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="8dp"
-                    android:textAlignment="viewStart"
                     android:text="@{pokemonType}"
+                    android:textAlignment="viewStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     android:textColor="@{textChangedColor}"
                     android:textStyle="bold"
@@ -127,7 +132,7 @@
                     tools:text="None" />
 
                 <TextView
-                    android:id="@+id/pokemon_description_label"
+                    android:id="@+id/pokemon_detail_description_label"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -139,16 +144,163 @@
                     app:layout_constraintTop_toBottomOf="@id/pokemon_detail_type_label" />
 
                 <TextView
-                    android:id="@+id/pokemon_description"
+                    android:id="@+id/pokemon_detail_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:textAlignment="center"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@{textChangedColor}"
-                    app:layout_constraintTop_toBottomOf="@id/pokemon_description_label"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_description_label"
                     tools:maxLines="15"
                     tools:text="@tools:sample/lorem/random" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/details"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_description" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_habitat_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/habitat"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_details" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_habitat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/pokemon_detail_habitat_label"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_habitat_label"
+                    tools:text="Habitat value" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_height_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/height"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_habitat_label" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/pokemon_detail_height_label"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_height_label"
+                    tools:text="Height value" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_weight_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/weight"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_height_label" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/pokemon_detail_weight_label"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_weight_label"
+                    tools:text="Weight value" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_happiness_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/base_happiness"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_weight_label" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_happiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/pokemon_detail_happiness_label"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_happiness_label"
+                    tools:text="Happiness value" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_captureRate_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:paddingHorizontal="8dp"
+                    android:text="@string/capture_rate"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/pokemon_detail_happiness_label" />
+
+                <TextView
+                    android:id="@+id/pokemon_detail_captureRate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@{textChangedColor}"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@id/pokemon_detail_captureRate_label"
+                    app:layout_constraintTop_toTopOf="@id/pokemon_detail_captureRate_label"
+                    tools:text="Capture rate value" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

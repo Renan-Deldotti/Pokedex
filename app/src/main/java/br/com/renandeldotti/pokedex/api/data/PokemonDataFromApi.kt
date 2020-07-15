@@ -11,7 +11,12 @@ data class PokemonDataFromApi(
 )
 
 data class Stats (
-    val base_stat : Int
+    val base_stat : Int,
+    val stat: Stat
+)
+data class Stat (
+    val name : String,
+    val url : String
 )
 
 data class Types (

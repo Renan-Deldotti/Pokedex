@@ -46,9 +46,19 @@ class PokemonDetailFragment : Fragment() {
             binding.pokemonName = it.name.toUpperCase(Locale.getDefault())
             binding.pokemonId = getString(R.string.pokedex_id) + it.id.toString()
             binding.pokemonType = try {
-                it.types[0].type.name.capitalize(Locale.ROOT)
+                it.types[0].type.name.capitalize(Locale.getDefault())
             }catch (e:Exception){
                 ""
+            }
+            binding.pokemonDetailHeight.text = try {
+                (it.height / 10f).toString() + " m"
+            }catch (e:Exception){
+                getString(R.string.unknown)
+            }
+            binding.pokemonDetailWeight.text = try {
+                (it.weight / 10f).toString() + " kg"
+            }catch (e:Exception){
+                getString(R.string.unknown)
             }
             pokemonId = it.id
             changeImage()
@@ -56,7 +66,22 @@ class PokemonDetailFragment : Fragment() {
 
         viewModel.getPokemonDesc(args.pokemonId).observe(viewLifecycleOwner, Observer {
             if (!it.flavor_text_entries.isNullOrEmpty()){
-                binding.pokemonDescription.text = it.flavor_text_entries[0].flavor_text
+                binding.pokemonDetailDescription.text = it.flavor_text_entries[0].flavor_text
+            }
+            binding.pokemonDetailHabitat.text = try {
+                it.habitat.name.capitalize(Locale.getDefault())
+            }catch (e:Exception){
+                getString(R.string.unknown)
+            }
+            binding.pokemonDetailHappiness.text = try {
+                it.base_happiness.toString() + " / 255"
+            }catch (e:Exception){
+                getString(R.string.unknown)
+            }
+            binding.pokemonDetailCaptureRate.text = try {
+                it.capture_rate.toString() + " / 255"
+            }catch (e:Exception){
+                getString(R.string.unknown)
             }
         })
 
