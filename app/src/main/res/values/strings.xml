@@ -14,4 +14,6 @@
     <string name="details">Details</string>
     <string name="ditto_background">Ditto_background</string>
     <string name="no_name">No name</string>
+    <string name="shiny">Shiny</string>
+    <string name="type">Type:</string>
 </resources>

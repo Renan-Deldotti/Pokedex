@@ -30,4 +30,8 @@ interface FetchPokeApi {
     //Get all pokemon
     @GET("pokemon")
     fun getAllPokemon(@QueryMap options: Map<String, String>): Call<PokemonListFromApi>
+
+    // Get all pokemon by pages
+    @GET("https://pokeapi.co/api/v2/pokemon?offset=0&limit=50")
+    fun getAllPokemonByPage()
 }

@@ -9,11 +9,15 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.renandeldotti.pokedex.R
 import br.com.renandeldotti.pokedex.api.data.PokemonEntries
+import br.com.renandeldotti.pokedex.api.data.PokemonSpecies
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_pokemon.view.*
 import java.net.URI
 
-class PokemonListAdapter(private val pokemonList: List<PokemonEntries>) :
+class PokemonListAdapter(
+    private val pokemonList: List<PokemonEntries>,
+    private val listener: PokemonListClickListener
+) :
     RecyclerView.Adapter<PokemonListAdapter.PokemonListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonListViewHolder {
@@ -41,9 +45,20 @@ class PokemonListAdapter(private val pokemonList: List<PokemonEntries>) :
             .into(holder.pokemonImage)
     }
 
-
     inner class PokemonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val pokemonImage: ImageView = itemView.item_pokemon_imageView
         val pokemonName: TextView = itemView.item_pokemon_textView
+
+        init {
+            itemView.setOnClickListener {
+                if (adapterPosition != RecyclerView.NO_POSITION) {
+                    listener.selectedPokemon(pokemonList[adapterPosition].pokemon_species)
+                }
+            }
+        }
+    }
+
+    interface PokemonListClickListener {
+        fun selectedPokemon(pokemonSpecies: PokemonSpecies)
     }
 }

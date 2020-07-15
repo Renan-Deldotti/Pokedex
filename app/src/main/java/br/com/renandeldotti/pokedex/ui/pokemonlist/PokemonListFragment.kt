@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -15,12 +16,14 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.MainActivity
 import br.com.renandeldotti.pokedex.R
+import br.com.renandeldotti.pokedex.api.data.PokemonSpecies
 import br.com.renandeldotti.pokedex.databinding.FragmentPokemonListBinding
 import kotlinx.android.synthetic.main.activity_main.*
+import java.net.URI
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PokemonListFragment : Fragment() {
+class PokemonListFragment : Fragment(), PokemonListAdapter.PokemonListClickListener {
 
     private lateinit var binding: FragmentPokemonListBinding
     private lateinit var viewModel: PokemonListViewModel
@@ -39,7 +42,7 @@ class PokemonListFragment : Fragment() {
         //Log.e("TAG", "onCreateView: $pokedexId" )
         binding.recyclerViewPokemonListAll.layoutManager = GridLayoutManager(context,2)
         binding.recyclerViewPokemonListAll.setHasFixedSize(true)
-        adapter = PokemonListAdapter(ArrayList())
+        adapter = PokemonListAdapter(ArrayList(), this)
         binding.recyclerViewPokemonListAll.adapter = adapter
         if (pokedexId != null && !TextUtils.isEmpty(pokedexId) && pokedexId != "0" && pokedexId != "1"){
             updateRecyclerViewData(pokedexId)
@@ -59,9 +62,18 @@ class PokemonListFragment : Fragment() {
         viewModel.getPokemonListFromPokedex(pokedexId).observe(viewLifecycleOwner, Observer {
             //Log.e(TAG, "ID: $pokedexId\tData: $it ")
             if (!it.pokemon_entries.isNullOrEmpty()){
-                adapter = PokemonListAdapter(it.pokemon_entries)
+                adapter = PokemonListAdapter(it.pokemon_entries, this)
                 binding.recyclerViewPokemonListAll.adapter = adapter
             }
         })
+    }
+
+    override fun selectedPokemon(pokemonSpecies: PokemonSpecies) {
+        val id:Int = try{
+            URI(pokemonSpecies.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
+        }catch (e:Exception){
+            0
+        }
+        Log.e(TAG, "selectedPokemon: ${pokemonSpecies.name}\tID: $id")
     }
 }

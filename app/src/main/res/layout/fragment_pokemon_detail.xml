@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/colorBlackLight"
     tools:context=".ui.pokemondetail.PokemonDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageView
+        android:id="@+id/pokemon_detail_pokemonImage"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/ditto_shiny_placeholder" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/pokemon_detail_pokemonName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonImage"
+        tools:text="Pokemon Name"
+        tools:textColor="@color/colorPrimaryTextLight" />
+
+    <TextView
+        android:id="@+id/pokemon_detail_pokemonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_detail_switchShiny_label"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonName"
+        tools:text="#001"
+        tools:textColor="@color/colorPrimaryTextLight" />
+
+    <TextView
+        android:id="@+id/pokemon_detail_switchShiny_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="1"
+        android:text="@string/shiny"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pokemon_detail_pokemonId"
+        app:layout_constraintTop_toTopOf="@id/pokemon_detail_pokemonId"
+        tools:textColor="@color/colorPrimaryTextLight" />
+
+    <Switch
+        android:id="@+id/pokemon_detail_switchShiny"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_switchShiny_label"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toEndOf="@id/pokemon_detail_switchShiny_label"
+        app:layout_constraintTop_toTopOf="@id/pokemon_detail_switchShiny_label"
+        tools:textColor="@color/colorPrimaryTextLight" />
+
+    <TextView
+        android:id="@+id/pokemon_detail_type_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/type"
+        android:layout_marginTop="16dp"
+        android:textAlignment="viewEnd"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        tools:textColor="@color/colorPrimaryTextLight"
+        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonId"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_detail_type"/>
+
+    <TextView
+        android:id="@+id/pokemon_detail_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="None"
+        android:textAlignment="viewStart"
+        android:paddingHorizontal="8dp"
+        app:layout_constraintTop_toTopOf="@id/pokemon_detail_type_label"
+        app:layout_constraintStart_toEndOf="@id/pokemon_detail_type_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textStyle="bold"
+        tools:textColor="@color/colorPrimaryTextLight"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
