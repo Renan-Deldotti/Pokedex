@@ -7,93 +7,130 @@
     tools:background="@color/colorBlackLight"
     tools:context=".ui.pokemondetail.PokemonDetailFragment">
 
-    <ImageView
-        android:id="@+id/pokemon_detail_pokemonImage"
-        android:layout_width="300dp"
-        android:layout_height="0dp"
-        android:contentDescription="@string/pokemon_image"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@drawable/ditto_shiny_placeholder" />
-
-    <TextView
-        android:id="@+id/pokemon_detail_pokemonName"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="32sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonImage"
-        tools:text="Pokemon Name"
-        tools:textColor="@color/colorPrimaryTextLight" />
-
-    <TextView
-        android:id="@+id/pokemon_detail_pokemonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/pokemon_detail_switchShiny_label"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonName"
-        tools:text="#001"
-        tools:textColor="@color/colorPrimaryTextLight" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/pokemon_detail_switchShiny_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        android:text="@string/shiny"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/pokemon_detail_pokemonId"
-        app:layout_constraintTop_toTopOf="@id/pokemon_detail_pokemonId"
-        tools:textColor="@color/colorPrimaryTextLight" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <Switch
-        android:id="@+id/pokemon_detail_switchShiny"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_switchShiny_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.1"
-        app:layout_constraintStart_toEndOf="@id/pokemon_detail_switchShiny_label"
-        app:layout_constraintTop_toTopOf="@id/pokemon_detail_switchShiny_label"
-        tools:textColor="@color/colorPrimaryTextLight" />
+            <ImageView
+                android:id="@+id/pokemon_detail_pokemonImage"
+                android:layout_width="300dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/pokemon_image"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ditto_shiny_placeholder" />
 
-    <TextView
-        android:id="@+id/pokemon_detail_type_label"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/type"
-        android:textAlignment="viewEnd"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/pokemon_detail_type"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonId"
-        tools:textColor="@color/colorPrimaryTextLight" />
+            <TextView
+                android:id="@+id/pokemon_detail_pokemonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonImage"
+                tools:text="Pokemon Name"
+                tools:textColor="@color/colorPrimaryTextLight" />
 
-    <TextView
-        android:id="@+id/pokemon_detail_type"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="8dp"
-        android:textAlignment="viewStart"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/pokemon_detail_type_label"
-        app:layout_constraintTop_toTopOf="@id/pokemon_detail_type_label"
-        tools:text="None"
-        tools:textColor="@color/colorPrimaryTextLight" />
+            <TextView
+                android:id="@+id/pokemon_detail_pokemonId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_detail_switchShiny_label"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonName"
+                tools:text="#001"
+                tools:textColor="@color/colorPrimaryTextLight" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_switchShiny_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="@string/shiny"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_detail_pokemonId"
+                app:layout_constraintTop_toTopOf="@id/pokemon_detail_pokemonId"
+                tools:textColor="@color/colorPrimaryTextLight" />
+
+            <Switch
+                android:id="@+id/pokemon_detail_switchShiny"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/pokemon_detail_switchShiny_label"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.1"
+                app:layout_constraintStart_toEndOf="@id/pokemon_detail_switchShiny_label"
+                app:layout_constraintTop_toTopOf="@id/pokemon_detail_switchShiny_label"
+                tools:textColor="@color/colorPrimaryTextLight" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_type_label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/type"
+                android:textAlignment="viewEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/pokemon_detail_type"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonId"
+                tools:textColor="@color/colorPrimaryTextLight" />
+
+            <TextView
+                android:id="@+id/pokemon_detail_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:textAlignment="viewStart"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/pokemon_detail_type_label"
+                app:layout_constraintTop_toTopOf="@id/pokemon_detail_type_label"
+                tools:text="None"
+                tools:textColor="@color/colorPrimaryTextLight" />
+
+            <TextView
+                android:id="@+id/pokemon_description_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/description"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_detail_type_label"
+                tools:textColor="@color/colorPrimaryTextLight" />
+
+            <TextView
+                android:id="@+id/pokemon_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintTop_toBottomOf="@id/pokemon_description_label"
+                tools:text="@tools:sample/lorem/random"
+                tools:textColor="@color/colorPrimaryTextLight"
+                tools:maxLines="15"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

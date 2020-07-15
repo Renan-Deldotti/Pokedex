@@ -16,4 +16,5 @@
     <string name="no_name">No name</string>
     <string name="shiny">Shiny</string>
     <string name="type">Type:</string>
+    <string name="description">Description</string>
 </resources>

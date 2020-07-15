@@ -20,12 +20,17 @@ interface FetchPokeApi {
     fun getPokedexesFromRegion(@Path("id") regionId: String): Call<RegionPokedexes>
 
     //Get all Pokemon from a Pokedex
+    //Obs: 1 has all pokemon
     @GET("pokedex/{id}")
     fun getPokemonFromPokedex(@Path("id") pokedexId: String): Call<PokemonListFromPokedex>
 
     //Get pokemon info
     @GET("pokemon/{id}")
-    fun getPokemonInfo(@Path("id") pokemonID: Int)
+    fun getPokemonInfo(@Path("id") pokemonID: String)
+
+    //Get pokemon description
+    @GET("pokemon-species/{id}")
+    fun getPokemonDesc(@Path("id") pokemonID: String)
 
     //Get all pokemon
     @GET("pokemon")
