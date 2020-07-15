@@ -12,7 +12,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.MainActivity
 import br.com.renandeldotti.pokedex.R
@@ -69,11 +71,11 @@ class PokemonListFragment : Fragment(), PokemonListAdapter.PokemonListClickListe
     }
 
     override fun selectedPokemon(pokemonSpecies: PokemonSpecies) {
-        val id:Int = try{
-            URI(pokemonSpecies.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
+        try{
+            val id = URI(pokemonSpecies.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
+            findNavController().navigate(PokemonListFragmentDirections.actionNavPokemonListToPokemonDetailFragment(id.toString()))
         }catch (e:Exception){
-            0
+            Toast.makeText(context, getString(R.string.error), Toast.LENGTH_SHORT).show()
         }
-        Log.e(TAG, "selectedPokemon: ${pokemonSpecies.name}\tID: $id")
     }
 }

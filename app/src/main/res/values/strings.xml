@@ -17,4 +17,5 @@
     <string name="shiny">Shiny</string>
     <string name="type">Type:</string>
     <string name="description">Description</string>
+    <string name="error">Error</string>
 </resources>
