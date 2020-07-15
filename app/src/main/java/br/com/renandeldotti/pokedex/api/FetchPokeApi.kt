@@ -1,9 +1,6 @@
 package br.com.renandeldotti.pokedex.api
 
-import br.com.renandeldotti.pokedex.api.data.PokemonListFromApi
-import br.com.renandeldotti.pokedex.api.data.PokemonListFromPokedex
-import br.com.renandeldotti.pokedex.api.data.Region
-import br.com.renandeldotti.pokedex.api.data.RegionPokedexes
+import br.com.renandeldotti.pokedex.api.data.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -24,9 +21,9 @@ interface FetchPokeApi {
     @GET("pokedex/{id}")
     fun getPokemonFromPokedex(@Path("id") pokedexId: String): Call<PokemonListFromPokedex>
 
-    //Get pokemon info
+    //Get pokemon data
     @GET("pokemon/{id}")
-    fun getPokemonInfo(@Path("id") pokemonID: String)
+    fun getPokemonData(@Path("id") pokemonID: String): Call<PokemonDataFromApi>
 
     //Get pokemon description
     @GET("pokemon-species/{id}")
