@@ -11,6 +11,7 @@
         android:id="@+id/pokemon_detail_pokemonImage"
         android:layout_width="300dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/pokemon_image"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,28 +72,28 @@
         android:id="@+id/pokemon_detail_type_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/type"
         android:layout_marginTop="16dp"
+        android:text="@string/type"
         android:textAlignment="viewEnd"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
-        tools:textColor="@color/colorPrimaryTextLight"
-        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonId"
+        app:layout_constraintEnd_toStartOf="@id/pokemon_detail_type"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/pokemon_detail_type"/>
+        app:layout_constraintTop_toBottomOf="@id/pokemon_detail_pokemonId"
+        tools:textColor="@color/colorPrimaryTextLight" />
 
     <TextView
         android:id="@+id/pokemon_detail_type"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="None"
-        android:textAlignment="viewStart"
         android:paddingHorizontal="8dp"
-        app:layout_constraintTop_toTopOf="@id/pokemon_detail_type_label"
-        app:layout_constraintStart_toEndOf="@id/pokemon_detail_type_label"
+        android:textAlignment="viewStart"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
-        tools:textColor="@color/colorPrimaryTextLight"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/pokemon_detail_type_label"
+        app:layout_constraintTop_toTopOf="@id/pokemon_detail_type_label"
+        tools:text="None"
+        tools:textColor="@color/colorPrimaryTextLight" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
