@@ -1,5 +1,9 @@
 package br.com.renandeldotti.pokedex.ui.region
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -56,6 +60,10 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
 
     override fun selectedRegion(position: Int) {
         //Toast.makeText(context, "Name: ${regions[position].regionName}  ID: ${regions[position].regionId}", Toast.LENGTH_SHORT).show()
+        if (!checkInternet()){
+            Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show()
+            return
+        }
         regionViewModel.getPokedexesFromRegion(regions[position].regionId).observe(viewLifecycleOwner, Observer {
             if(!it.pokedexes.isNullOrEmpty()){
                 val pokedexId:String = URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/')
@@ -64,6 +72,20 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
                 }
             }
         })
+    }
+
+    private fun checkInternet():Boolean{
+        val connectivityManager: ConnectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val activeNetwork = connectivityManager.activeNetwork ?: return false
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
+            return (networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)||
+                    networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
+        } else {
+            connectivityManager.activeNetworkInfo?.let {return it.isConnectedOrConnecting}
+        }
+        return false
     }
 
     /*private fun test(){

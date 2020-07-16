@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         navController = findNavController(R.id.fragmentNavHost)
         configuration =
             AppBarConfiguration(
-                setOf(R.id.nav_regions, R.id.nav_pokemonList, R.id.nav_items, R.id.nav_about),
+                setOf(R.id.nav_regions, R.id.nav_pokemonList, R.id.nav_items, R.id.nav_settings, R.id.nav_about),
                 drawerLayout)
         setupActionBarWithNavController(navController, configuration)
         navView.setupWithNavController(navController)

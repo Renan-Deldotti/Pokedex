@@ -30,4 +30,6 @@
     <string name="pokedex_app">Pokedex app</string>
     <string name="about_string_1">Open source app\nall data is from\npokeapi.co</string>
     <string name="about_str">About</string>
+    <string name="no_internet">No internet connection</string>
+    <string name="dark_mode">Dark mode</string>
 </resources>
