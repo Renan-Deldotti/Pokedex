@@ -8,12 +8,12 @@ interface RegionDao {
     @Insert
     fun insert(vararg region: Region):List<Long>
 
-    @Query ("DELETE FROM regions_table")
+    @Query ("DELETE FROM region_table")
     fun deleteAllRegions()
 
-    @Query("SELECT * FROM regions_table ORDER BY regionName")
+    @Query("SELECT * FROM region_table ORDER BY regionName")
     fun getAllRegions():LiveData<List<Region>>
 
-    @Query("SELECT COUNT(*) FROM regions_table")
+    @Query("SELECT COUNT(*) FROM region_table")
     suspend fun getQuantityOfRegions():Int
 }
