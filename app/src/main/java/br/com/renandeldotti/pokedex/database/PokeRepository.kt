@@ -7,7 +7,7 @@ import android.net.NetworkCapabilities.*
 import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
-import br.com.renandeldotti.pokedex.PokedexApp
+import br.com.renandeldotti.pokedex.Pokedex
 import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
 import br.com.renandeldotti.pokedex.api.data.Results
 import kotlinx.coroutines.*
@@ -73,7 +73,7 @@ class PokeRepository(private val application: Application) {
         if (!hasInternet){
             return
         }
-        val sharedPreferences = application.getSharedPreferences(PokedexApp.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE)
+        val sharedPreferences = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE)
         if (sharedPreferences.contains(REGIONS_LAST_UPDATED)){
             val lastUpdated = sharedPreferences.getLong(REGIONS_LAST_UPDATED, 0)
             if ((Date().time - lastUpdated) >= FIVE_DAYS_IN_MILLI){
@@ -138,7 +138,7 @@ class PokeRepository(private val application: Application) {
     }
 
     private fun updateLastUpdatedPreference(){
-        val sharedPreferencesEditor = application.getSharedPreferences(PokedexApp.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
+        val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
         sharedPreferencesEditor.putLong(REGIONS_LAST_UPDATED, Date().time)
         sharedPreferencesEditor.apply()
     }

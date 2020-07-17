@@ -18,7 +18,7 @@ data class PokemonDetail(
     val types: List<PokemonTypes>
 ) {
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
+    val id: Long = 0L
 }
 
 data class PokemonStats(

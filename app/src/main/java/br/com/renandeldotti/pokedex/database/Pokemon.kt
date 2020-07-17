@@ -1,6 +1,5 @@
 package br.com.renandeldotti.pokedex.database
 
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,5 +13,5 @@ data class Pokemon(
     val fromPokedex: Int
 ) : Parcelable{
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0
+    val id: Long = 0L
 }
