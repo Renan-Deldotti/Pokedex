@@ -5,9 +5,9 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "region_table")
+@Entity(tableName = "regions_table")
 @Parcelize
-data class Region(val regionName: String, val regionId: String) : Parcelable {
+data class Region(val regionName:String, val regionId:String) : Parcelable {
     @PrimaryKey(autoGenerate = true)
-    var id: Long = 0L
+    var id:Long = 0L
 }

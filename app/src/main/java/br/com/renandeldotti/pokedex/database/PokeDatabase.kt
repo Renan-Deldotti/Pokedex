@@ -6,6 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [Pokemon::class], version = 1, exportSchema = false)
+=======
+@Database(entities = [Region::class], version = 1, exportSchema = false)
+>>>>>>> parent of 94bd886... Offline mode
 abstract class PokeDatabase : RoomDatabase() {
 
     abstract val regionDao: RegionDao
