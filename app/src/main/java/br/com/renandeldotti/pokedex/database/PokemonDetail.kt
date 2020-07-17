@@ -1,10 +1,10 @@
 package br.com.renandeldotti.pokedex.database
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 @Entity(tableName = "pokemon_detail_table")
 data class PokemonDetail(
+<<<<<<< HEAD
     val base_happiness: Int,
     val capture_rate: Int,
     val flavor_text: String,
@@ -29,4 +29,7 @@ data class PokemonStats(
 data class PokemonTypes(
     val slot: Int,
     val type_name: String
+=======
+    
+>>>>>>> parent of 36bfc38... Update
 )
