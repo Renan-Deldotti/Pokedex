@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
+<<<<<<< HEAD
 @Database(entities = [Pokemon::class], version = 1, exportSchema = false)
 =======
 @Database(entities = [Region::class], version = 1, exportSchema = false)
