@@ -4,12 +4,10 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 
-<<<<<<< HEAD
-@Database(entities = [Pokemon::class], version = 1, exportSchema = false)
-=======
-@Database(entities = [Region::class], version = 1, exportSchema = false)
->>>>>>> parent of 94bd886... Offline mode
+@Database(entities = [Region::class, Pokemon::class, Regions::class, PokemonDetail::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
 abstract class PokeDatabase : RoomDatabase() {
 
     abstract val regionDao: RegionDao
