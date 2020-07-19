@@ -40,9 +40,8 @@ class PokeRepository(private val application: Application) {
 
     companion object{
         //private const val TAG:String = "PokeRepository"
-        private const val REGIONS_LAST_UPDATED:String = "REGIONS_LAST_UPDATED"
+        private const val DATA_LAST_UPDATED:String = "DATA_LAST_UPDATED"
         private const val ONE_DAY_IN_MILLI:Long = 86400000L
-        private const val FIVE_DAYS_IN_MILLI:Long = 432000000L
         private const val TAG:String = "PokeRepository"
     }
 
@@ -72,27 +71,29 @@ class PokeRepository(private val application: Application) {
     }
 
     /**
-     * Should update only if has internet and the last update was before
-     * 5 days or (1 day + changes)
+     * Used refresh the data
+     * obs: method started by the user only
+     */
+    fun forceRefresh(){
+        if (!hasInternet){
+            return
+        }
+        fetchRegionsData()
+        Log.e(TAG, "forceRefresh: ")
+    }
+
+    /**
+     * Should update only if has internet and the last update was yesterday or before
      */
     private fun checkLastUpdated(){
         if (!hasInternet){
             return
         }
         val sharedPreferences = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE)
-        if (sharedPreferences.contains(REGIONS_LAST_UPDATED)){
-            val lastUpdated = sharedPreferences.getLong(REGIONS_LAST_UPDATED, 0)
-            if ((Date().time - lastUpdated) >= FIVE_DAYS_IN_MILLI){
+        if (sharedPreferences.contains(DATA_LAST_UPDATED)){
+            val lastUpdated = sharedPreferences.getLong(DATA_LAST_UPDATED, 0)
+            if ((Date().time - lastUpdated) >= ONE_DAY_IN_MILLI){
                 fetchRegionsData()
-                //fetchPokemonData()
-            }else if ((Date().time - lastUpdated) >= ONE_DAY_IN_MILLI){
-                uiScope.launch {
-                    var qnt = 0
-                    withContext(Dispatchers.IO){
-                        qnt = regionDao.getQuantityOfRegions()
-                    }
-                    fetchRegionsData(qnt)
-                }
             }
         }else{
             // Do not have any data yet - Should update
@@ -100,7 +101,7 @@ class PokeRepository(private val application: Application) {
         }
     }
 
-    private fun fetchRegionsData(storedSize:Int = -1){
+    private fun fetchRegionsData(){
         val regionCall: Call<br.com.renandeldotti.pokedex.api.data.Region> = pokeApi.getPokeApi().getRegions()
         regionCall.enqueue(object : Callback<br.com.renandeldotti.pokedex.api.data.Region> {
             override fun onFailure(call: Call<br.com.renandeldotti.pokedex.api.data.Region>, t: Throwable) {
@@ -109,35 +110,29 @@ class PokeRepository(private val application: Application) {
 
             override fun onResponse(call: Call<br.com.renandeldotti.pokedex.api.data.Region>, response: Response<br.com.renandeldotti.pokedex.api.data.Region>) {
                 response.body()?.run {
-                    if (storedSize == -1) {
-                        renewRegionsData(this.results)
-                    }else{
-                        if(storedSize != this.results.size){
-                            renewRegionsData(this.results)
-                        }
-                    }
+                    renewRegionsData(this.results)
                 }
             }
         })
     }
 
-    fun renewRegionsData(list:List<Results>){
+    private fun renewRegionsData(list:List<Results>){
         uiScope.launch {
             withContext(Dispatchers.IO){
                 regionDao.deleteAllRegions()
                 val formattedList = ArrayList<Region>()
+                val newList = ArrayList<Regions>()
                 list.forEach{
                     val id: Int = try {
-                        // Test to see if its an integer if not then it will thrown an exception
                         URI(it.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
                     }catch (e: Exception){
                         1
                     }
+                    newList.add(Regions(it.name,id))
                     formattedList.add(Region(it.name, id.toString()))
                 }
                 regionDao.insert(*formattedList.toTypedArray())
-                //val idsReturned = regionDao.insert(*formattedList.toTypedArray())
-                //Log.e(TAG, "IDS_RETURNED -> $idsReturned")
+                regionsDao.insert(*newList.toTypedArray())
             }
         }
         updateLastUpdatedPreference()
@@ -145,11 +140,13 @@ class PokeRepository(private val application: Application) {
 
     private fun updateLastUpdatedPreference(){
         val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
-        sharedPreferencesEditor.putLong(REGIONS_LAST_UPDATED, Date().time)
+        sharedPreferencesEditor.putLong(DATA_LAST_UPDATED, Date().time)
         sharedPreferencesEditor.apply()
     }
 
     fun getAllRegions():LiveData<List<Region>> = regionDao.getAllRegions()
+
+    fun getRegions(): LiveData<List<Regions>> = regionsDao.getAllRegions()
 
     fun cancelRepositoryJobs() = repositoryJob.cancel()
 }

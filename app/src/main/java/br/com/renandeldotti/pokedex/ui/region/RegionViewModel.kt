@@ -9,6 +9,7 @@ import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
 import br.com.renandeldotti.pokedex.api.data.RegionPokedexes
 import br.com.renandeldotti.pokedex.database.PokeRepository
 import br.com.renandeldotti.pokedex.database.Region
+import br.com.renandeldotti.pokedex.database.Regions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +23,8 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun getRegions(): LiveData<List<Region>> = pokeRepository.getAllRegions()
+
+    fun getRegionsData(): LiveData<List<Regions>> = pokeRepository.getRegions()
 
     fun getPokedexesFromRegion(regionId: String): LiveData<RegionPokedexes>{
         val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId)

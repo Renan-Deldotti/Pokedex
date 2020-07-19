@@ -11,14 +11,8 @@ import kotlinx.android.parcel.RawValue
 @Parcelize
 data class Regions(
     val name: String,
-    val regionId: Int,
-    val pokedexes: @RawValue List<Pokedex>
+    val regionId: Int
 ) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }
-
-data class Pokedex(
-    val name: String,
-    val pokedexId: Int
-)

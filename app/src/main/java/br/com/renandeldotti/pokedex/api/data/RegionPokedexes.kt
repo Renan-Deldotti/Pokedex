@@ -1,6 +1,7 @@
 package br.com.renandeldotti.pokedex.api.data
 
 data class RegionPokedexes(
+    val id: Int,
     val pokedexes: List<Pokedexes>
 )
 
