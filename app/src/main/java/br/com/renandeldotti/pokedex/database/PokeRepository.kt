@@ -30,7 +30,6 @@ import kotlin.collections.ArrayList
  */
 class PokeRepository(private val application: Application) {
     private val pokeApi: RetrofitPokeApi = RetrofitPokeApi()
-    private var regionDao:RegionDao
     private var regionsDao:RegionsDao
     private var pokemonDao:PokemonDao
     private var pokemonDetailDao:PokemonDetailDao
@@ -47,7 +46,6 @@ class PokeRepository(private val application: Application) {
 
     init {
         val database:PokeDatabase = PokeDatabase.getInstance(application)
-        regionDao = database.regionDao
         regionsDao = database.regionsDao
         pokemonDao = database.pokemonDao
         pokemonDetailDao = database.pokemonDetailDao
@@ -119,20 +117,16 @@ class PokeRepository(private val application: Application) {
     private fun renewRegionsData(list:List<Results>){
         uiScope.launch {
             withContext(Dispatchers.IO){
-                regionDao.deleteAllRegions()
-                val formattedList = ArrayList<Region>()
-                val newList = ArrayList<Regions>()
+                val formattedList = ArrayList<Regions>()
                 list.forEach{
                     val id: Int = try {
                         URI(it.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
                     }catch (e: Exception){
                         1
                     }
-                    newList.add(Regions(it.name,id))
-                    formattedList.add(Region(it.name, id.toString()))
+                    formattedList.add(Regions(it.name, id))
                 }
-                regionDao.insert(*formattedList.toTypedArray())
-                regionsDao.insert(*newList.toTypedArray())
+                regionsDao.insert(*formattedList.toTypedArray())
             }
         }
         updateLastUpdatedPreference()
@@ -143,8 +137,6 @@ class PokeRepository(private val application: Application) {
         sharedPreferencesEditor.putLong(LAST_UPDATE_DATE, Date().time)
         sharedPreferencesEditor.apply()
     }
-
-    fun getAllRegions():LiveData<List<Region>> = regionDao.getAllRegions()
 
     fun getRegions(): LiveData<List<Regions>> = regionsDao.getAllRegions()
 

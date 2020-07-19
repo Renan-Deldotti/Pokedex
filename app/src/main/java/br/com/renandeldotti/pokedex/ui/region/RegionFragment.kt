@@ -6,7 +6,6 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
-import br.com.renandeldotti.pokedex.database.Region
+import br.com.renandeldotti.pokedex.database.Regions
 import br.com.renandeldotti.pokedex.databinding.FragmentRegionBinding
 import java.net.URI
 
@@ -26,7 +25,7 @@ import java.net.URI
 class RegionFragment : Fragment(), RegionAdapter.RegionListener {
 
     private lateinit var regionViewModel: RegionViewModel
-    private lateinit var regions: List<Region>
+    private lateinit var regions: List<Regions>
     //private var isConnectedToInternet:Boolean = false
     private lateinit var fragmentRegionBinding: FragmentRegionBinding
 
@@ -42,7 +41,7 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
     }
 
     companion object{
-        private const val TAG:String = "RegionFragment"
+        //private const val TAG:String = "RegionFragment"
     }
 
     private fun updateRegionsData(){
@@ -50,7 +49,7 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
             it?.let {
                 val tempList = ArrayList<String>()
                 for(region in it){
-                    tempList.add(region.regionName)
+                    tempList.add(region.name)
                 }
                 regions = it
                 fragmentRegionBinding.recyclerViewRegions.adapter = RegionAdapter(tempList, this)
@@ -64,11 +63,11 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
             Toast.makeText(context, R.string.no_internet, Toast.LENGTH_SHORT).show()
             return
         }
-        regionViewModel.getPokedexesFromRegion(regions[position].regionId).observe(viewLifecycleOwner, Observer {
+        regionViewModel.getPokedexesFromRegion(regions[position].regionId.toString()).observe(viewLifecycleOwner, Observer {
             if(!it.pokedexes.isNullOrEmpty()){
                 val pokedexId:String = URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/')
                 if (!TextUtils.isEmpty(pokedexId)){
-                    findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(pokedexId, regions[position].regionName))
+                    findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(pokedexId, regions[position].name))
                 }
             }
         })

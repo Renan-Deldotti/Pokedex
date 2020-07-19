@@ -6,11 +6,10 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Region::class, Pokemon::class, Regions::class, PokemonDetail::class], version = 1, exportSchema = false)
+@Database(entities = [Regions::class, Pokemon::class, PokemonDetail::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class PokeDatabase : RoomDatabase() {
 
-    abstract val regionDao: RegionDao
     abstract val regionsDao: RegionsDao
     abstract val pokemonDao: PokemonDao
     abstract val pokemonDetailDao: PokemonDetailDao
