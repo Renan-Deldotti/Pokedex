@@ -40,7 +40,7 @@ class PokeRepository(private val application: Application) {
 
     companion object{
         //private const val TAG:String = "PokeRepository"
-        private const val DATA_LAST_UPDATED:String = "DATA_LAST_UPDATED"
+        private const val LAST_UPDATE_DATE:String = "LAST_UPDATE_DATE"
         private const val ONE_DAY_IN_MILLI:Long = 86400000L
         private const val TAG:String = "PokeRepository"
     }
@@ -90,8 +90,8 @@ class PokeRepository(private val application: Application) {
             return
         }
         val sharedPreferences = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE)
-        if (sharedPreferences.contains(DATA_LAST_UPDATED)){
-            val lastUpdated = sharedPreferences.getLong(DATA_LAST_UPDATED, 0)
+        if (sharedPreferences.contains(LAST_UPDATE_DATE)){
+            val lastUpdated = sharedPreferences.getLong(LAST_UPDATE_DATE, 0)
             if ((Date().time - lastUpdated) >= ONE_DAY_IN_MILLI){
                 fetchRegionsData()
             }
@@ -140,7 +140,7 @@ class PokeRepository(private val application: Application) {
 
     private fun updateLastUpdatedPreference(){
         val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
-        sharedPreferencesEditor.putLong(DATA_LAST_UPDATED, Date().time)
+        sharedPreferencesEditor.putLong(LAST_UPDATE_DATE, Date().time)
         sharedPreferencesEditor.apply()
     }
 
