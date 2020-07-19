@@ -27,6 +27,7 @@
     <string name="base_happiness">Base happiness:</string>
     <string name="capture_rate">Capture rate:</string>
     <string name="app">app</string>
+    <string name="pokedexes">Pokedexes</string>
     <string name="pokedex_app">Pokedex app</string>
     <string name="about_string_1">Open source app\nall data is from\npokeapi.co</string>
     <string name="about_str">About</string>
