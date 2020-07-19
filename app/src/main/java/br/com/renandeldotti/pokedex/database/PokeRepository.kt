@@ -31,6 +31,9 @@ import kotlin.collections.ArrayList
 class PokeRepository(private val application: Application) {
     private val pokeApi: RetrofitPokeApi = RetrofitPokeApi()
     private var regionDao:RegionDao
+    private var regionsDao:RegionsDao
+    private var pokemonDao:PokemonDao
+    private var pokemonDetailDao:PokemonDetailDao
     private var repositoryJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + repositoryJob)
     private var hasInternet:Boolean = false
@@ -46,6 +49,9 @@ class PokeRepository(private val application: Application) {
     init {
         val database:PokeDatabase = PokeDatabase.getInstance(application)
         regionDao = database.regionDao
+        regionsDao = database.regionsDao
+        pokemonDao = database.pokemonDao
+        pokemonDetailDao = database.pokemonDetailDao
 
         hasInternet = checkInternet()
         checkLastUpdated()

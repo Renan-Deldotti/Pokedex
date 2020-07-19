@@ -1,9 +1,14 @@
 package br.com.renandeldotti.pokedex.database
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Entity(tableName = "pokemon_detail_table")
+@Parcelize
 data class PokemonDetail(
     val base_happiness: Int,
     val capture_rate: Int,
@@ -14,9 +19,9 @@ data class PokemonDetail(
     val description: String,
     val habitat_name: String,
     val name: String,
-    val stats: List<PokemonStats>,
-    val types: List<PokemonTypes>
-) {
+    val stats: @RawValue List<PokemonStats>,
+    val types: @RawValue List<PokemonTypes>
+) : Parcelable {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }

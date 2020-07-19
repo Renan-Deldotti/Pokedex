@@ -11,6 +11,9 @@ import androidx.room.TypeConverters
 abstract class PokeDatabase : RoomDatabase() {
 
     abstract val regionDao: RegionDao
+    abstract val regionsDao: RegionsDao
+    abstract val pokemonDao: PokemonDao
+    abstract val pokemonDetailDao: PokemonDetailDao
 
     companion object {
 

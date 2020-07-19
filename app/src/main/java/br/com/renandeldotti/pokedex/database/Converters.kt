@@ -13,7 +13,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toPokedexList(jsonString: String): List<Pokedex> {
+    fun stringToPokedexList(jsonString: String): List<Pokedex> {
         val gson = Gson()
         val type = object : TypeToken<List<Pokedex>>() {}.type
         return gson.fromJson(jsonString, type)
@@ -27,7 +27,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toStatsList(jsonString: String): List<PokemonStats> {
+    fun stringToStatsList(jsonString: String): List<PokemonStats> {
         val gson = Gson()
         val type = object : TypeToken<List<PokemonStats>>() {}.type
         return gson.fromJson(jsonString, type)
@@ -41,7 +41,7 @@ class Converters {
     }
 
     @TypeConverter
-    fun toTypesList(jsonString: String): List<PokemonTypes> {
+    fun stringToTypesList(jsonString: String): List<PokemonTypes> {
         val gson = Gson()
         val type = object : TypeToken<List<PokemonTypes>>() {}.type
         return gson.fromJson(jsonString, type)
