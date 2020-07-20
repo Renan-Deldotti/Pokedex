@@ -4,6 +4,7 @@ import br.com.renandeldotti.pokedex.api.data.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface FetchPokeApi {
@@ -21,6 +22,10 @@ interface FetchPokeApi {
     @GET("pokedex/{id}")
     fun getPokemonFromPokedex(@Path("id") pokedexId: String): Call<PokemonListFromPokedex>
 
+    // Get all pokedexes
+    @GET("pokedex")
+    fun getAllPokedexes(@Query("limit") limitTo:Int): Call<PokedexesFromApi>
+
     //Get pokemon data
     @GET("pokemon/{id}")
     fun getPokemonData(@Path("id") pokemonID: String): Call<PokemonDataFromApi>
@@ -34,6 +39,6 @@ interface FetchPokeApi {
     fun getAllPokemon(@QueryMap options: Map<String, String>): Call<PokemonListFromApi>
 
     // Get all pokemon by pages
-    @GET("https://pokeapi.co/api/v2/pokemon?offset=0&limit=50")
+    @GET("pokemon?offset=0&limit=50")
     fun getAllPokemonByPage()
 }

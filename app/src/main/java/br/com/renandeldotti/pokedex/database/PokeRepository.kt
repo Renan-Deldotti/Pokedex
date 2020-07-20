@@ -7,8 +7,11 @@ import android.net.NetworkCapabilities.*
 import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import br.com.renandeldotti.pokedex.Pokedex
 import br.com.renandeldotti.pokedex.api.RetrofitPokeApi
+import br.com.renandeldotti.pokedex.api.data.PokedexesFromApi
+import br.com.renandeldotti.pokedex.api.data.RegionPokedexes
 import br.com.renandeldotti.pokedex.api.data.Results
 import kotlinx.coroutines.*
 import retrofit2.Call
@@ -32,10 +35,13 @@ class PokeRepository(private val application: Application) {
     private val pokeApi: RetrofitPokeApi = RetrofitPokeApi()
     private var regionsDao:RegionsDao
     private var pokemonDao:PokemonDao
+    private var pokedexesDao: PokedexesDao
     private var pokemonDetailDao:PokemonDetailDao
     private var repositoryJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + repositoryJob)
     private var hasInternet:Boolean = false
+    private var needUpdate:Boolean = false
+    private var pokedexesFromRegionMLV = MutableLiveData<List<Pokedexes>>()
 
     companion object{
         //private const val TAG:String = "PokeRepository"
@@ -48,6 +54,7 @@ class PokeRepository(private val application: Application) {
         val database:PokeDatabase = PokeDatabase.getInstance(application)
         regionsDao = database.regionsDao
         pokemonDao = database.pokemonDao
+        pokedexesDao = database.pokedexesDao
         pokemonDetailDao = database.pokemonDetailDao
 
         hasInternet = checkInternet()
@@ -91,11 +98,15 @@ class PokeRepository(private val application: Application) {
         if (sharedPreferences.contains(LAST_UPDATE_DATE)){
             val lastUpdated = sharedPreferences.getLong(LAST_UPDATE_DATE, 0)
             if ((Date().time - lastUpdated) >= ONE_DAY_IN_MILLI){
+                needUpdate = true
                 fetchRegionsData()
+                fetchPokedexes()
             }
         }else{
             // Do not have any data yet - Should update
+            needUpdate = true
             fetchRegionsData()
+            fetchPokedexes()
         }
     }
 
@@ -132,6 +143,44 @@ class PokeRepository(private val application: Application) {
         updateLastUpdatedPreference()
     }
 
+    private fun fetchPokedexes(){
+        val pokedexesCall: Call<PokedexesFromApi> = pokeApi.getPokeApi().getAllPokedexes(50)
+        pokedexesCall.enqueue(object :Callback<PokedexesFromApi>{
+            override fun onFailure(call: Call<PokedexesFromApi>, t: Throwable) {
+                Log.e(TAG,"Error: "+t.message)
+            }
+
+            override fun onResponse(
+                call: Call<PokedexesFromApi>,
+                response: Response<PokedexesFromApi>
+            ) {
+                response.body()?.let {
+                    renewPokedexes(it)
+                }
+            }
+        })
+    }
+
+    private fun renewPokedexes(pokedexesFromApi: PokedexesFromApi){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+                pokedexesDao.deleteAllPokedexes()
+                if (!pokedexesFromApi.results.isNullOrEmpty()){
+                    val tempList = ArrayList<Pokedexes>()
+                    for (pokedex in pokedexesFromApi.results){
+                        val pId = try {
+                            URI(pokedex.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
+                        }catch (e:Exception){
+                            1
+                        }
+                        tempList.add(Pokedexes(pokedex.name, pId))
+                    }
+                    pokedexesDao.insert(*tempList.toTypedArray())
+                }
+            }
+        }
+    }
+
     private fun updateLastUpdatedPreference(){
         val sharedPreferencesEditor = application.getSharedPreferences(Pokedex.POKEDEX_SHARED_PREF, Context.MODE_PRIVATE).edit()
         sharedPreferencesEditor.putLong(LAST_UPDATE_DATE, Date().time)
@@ -139,6 +188,45 @@ class PokeRepository(private val application: Application) {
     }
 
     fun getRegions(): LiveData<List<Regions>> = regionsDao.getAllRegions()
+
+    private fun fetchPokedexesFromRegion(regionId:Int):LiveData<List<Pokedexes>>{
+        val tempData = MutableLiveData<List<Pokedexes>>()
+        val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId.toString())
+        call.enqueue(object : Callback<RegionPokedexes>{
+            override fun onFailure(call: Call<RegionPokedexes>, t: Throwable) {
+                Log.e(TAG,"Error: "+t.message)
+            }
+
+            override fun onResponse(
+                call: Call<RegionPokedexes>,
+                response: Response<RegionPokedexes>
+            ) {
+                response.body()?.let {
+                    if (!it.pokedexes.isNullOrEmpty()){
+                        val tempList = ArrayList<Int>()
+                        for( e in it.pokedexes){
+                            val pId = try {
+                                URI(e.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
+                            }catch (e:Exception){
+                                0
+                            }
+                            tempList.add(pId)
+                        }
+                        //tempData.value = pokedexesDao.getPokedexesFromRegion(tempList)
+                        uiScope.launch {
+                            withContext(Dispatchers.IO){
+                                Log.e(TAG, "onResponse: $tempList" )
+                                Log.e(TAG, "onResponse: "+pokedexesDao.getAllPokedexes().value )
+                                val ids = pokedexesDao.countPokedexesFromRegion(tempList)
+                                Log.e(TAG, "onResponse: $ids")
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        return tempData
+    }
 
     fun cancelRepositoryJobs() = repositoryJob.cancel()
 }

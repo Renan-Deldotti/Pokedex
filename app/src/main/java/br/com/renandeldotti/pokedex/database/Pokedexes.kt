@@ -5,14 +5,9 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "pokedexes_table")
 data class Pokedexes(
-    val pokedexes: List<Pokedex>,
-    val fromRegionId: Int
+    val name: String,
+    val pokedexId: Int
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0
 }
-
-data class Pokedex(
-    val name: String,
-    val pokedexId: Int
-)

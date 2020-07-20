@@ -5,7 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class Converters {
-    @TypeConverter
+    /*@TypeConverter
     fun fromPokedexList(list: List<Pokedex>): String {
         val gson = Gson()
         val type = object : TypeToken<List<Pokedex>>() {}.type
@@ -17,7 +17,7 @@ class Converters {
         val gson = Gson()
         val type = object : TypeToken<List<Pokedex>>() {}.type
         return gson.fromJson(jsonString, type)
-    }
+    }*/
 
     @TypeConverter
     fun fromStatsList(list: List<PokemonStats>): String {
