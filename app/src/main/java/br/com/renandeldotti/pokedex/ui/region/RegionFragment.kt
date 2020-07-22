@@ -20,6 +20,7 @@ import br.com.renandeldotti.pokedex.R
 import br.com.renandeldotti.pokedex.database.Regions
 import br.com.renandeldotti.pokedex.databinding.FragmentRegionBinding
 import java.net.URI
+import kotlin.Exception
 
 
 class RegionFragment : Fragment(), RegionAdapter.RegionListener {
@@ -65,10 +66,16 @@ class RegionFragment : Fragment(), RegionAdapter.RegionListener {
         }
         regionViewModel.getPokedexesFromRegion(regions[position].regionId.toString()).observe(viewLifecycleOwner, Observer {
             if(!it.pokedexes.isNullOrEmpty()){
-                val pokedexId:String = URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/')
+                /*val pokedexId:String = URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/')
                 if (!TextUtils.isEmpty(pokedexId)){
                     findNavController().navigate(RegionFragmentDirections.actionOpenPokemonListFromRegion(pokedexId, regions[position].name))
+                }*/
+                val pokedexId = try {
+                    URI(it.pokedexes[0].url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
+                }catch (e:Exception){
+                    2
                 }
+                findNavController().navigate(RegionFragmentDirections.actionNavRegionsToPokedexesFragment(pokedexId))
             }
         })
     }

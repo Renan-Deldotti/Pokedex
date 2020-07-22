@@ -6,11 +6,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.renandeldotti.pokedex.R
+import br.com.renandeldotti.pokedex.database.Pokedexes
 import kotlinx.android.synthetic.main.item_region.view.*
 import java.util.*
 
 class PokedexesAdapter(
-    private val pokedexesNamesList: List<String>,
+    private val pokedexesNamesList: List<Pokedexes>,
     private val pokedexesAdapterListener: PokedexAdapterListener
 ) : RecyclerView.Adapter<PokedexesAdapter.PokedexesViewHolder>() {
 
@@ -26,7 +27,7 @@ class PokedexesAdapter(
 
     @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: PokedexesViewHolder, position: Int) {
-        holder.pokedexNameTV.text = pokedexesNamesList[position].capitalize(Locale.getDefault())
+        holder.pokedexNameTV.text = pokedexesNamesList[position].name.capitalize(Locale.getDefault())
     }
 
     inner class PokedexesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

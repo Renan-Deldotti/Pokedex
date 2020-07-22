@@ -189,9 +189,11 @@ class PokeRepository(private val application: Application) {
 
     fun getRegions(): LiveData<List<Regions>> = regionsDao.getAllRegions()
 
-    private fun fetchPokedexesFromRegion(regionId:Int):LiveData<List<Pokedexes>>{
+    fun fetchPokedexesFromRegion(regionId:Int):LiveData<List<Pokedexes>>{
         val tempData = MutableLiveData<List<Pokedexes>>()
         val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId.toString())
+        var isFinished:Boolean = false
+        val tempList = ArrayList<Int>()
         call.enqueue(object : Callback<RegionPokedexes>{
             override fun onFailure(call: Call<RegionPokedexes>, t: Throwable) {
                 Log.e(TAG,"Error: "+t.message)
@@ -203,7 +205,6 @@ class PokeRepository(private val application: Application) {
             ) {
                 response.body()?.let {
                     if (!it.pokedexes.isNullOrEmpty()){
-                        val tempList = ArrayList<Int>()
                         for( e in it.pokedexes){
                             val pId = try {
                                 URI(e.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
@@ -217,14 +218,26 @@ class PokeRepository(private val application: Application) {
                             withContext(Dispatchers.IO){
                                 Log.e(TAG, "onResponse: $tempList" )
                                 Log.e(TAG, "onResponse: "+pokedexesDao.getAllPokedexes().value )
+                                //tempData.value = pokedexesDao.getAllPokedexes().value
                                 val ids = pokedexesDao.countPokedexesFromRegion(tempList)
                                 Log.e(TAG, "onResponse: $ids")
                             }
                         }
+                        isFinished = true
                     }
                 }
             }
         })
+        CoroutineScope(Dispatchers.Main).launch{
+            withContext(Dispatchers.IO){
+                while (!isFinished){
+                    Thread.sleep(200)
+                }
+                if (!tempList.isNullOrEmpty()){
+                    tempData.value = pokedexesDao.getPokedexesFromRegion(tempList).value
+                }
+            }
+        }
         return tempData
     }
 
