@@ -189,48 +189,7 @@ class PokeRepository(private val application: Application) {
 
     fun getRegions(): LiveData<List<Regions>> = regionsDao.getAllRegions()
 
-    fun fetchPokedexesIdFromRegion(regionId:Int):LiveData<List<Int>>{
-        val tempData = MutableLiveData<List<Int>>()
-        val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId.toString())
-        var isFinished = false
-        val tempList = ArrayList<Int>()
-        call.enqueue(object : Callback<RegionPokedexes>{
-            override fun onFailure(call: Call<RegionPokedexes>, t: Throwable) {
-                Log.e(TAG,"Error: "+t.message)
-            }
-
-            override fun onResponse(
-                call: Call<RegionPokedexes>,
-                response: Response<RegionPokedexes>
-            ) {
-                response.body()?.let {
-                    if (!it.pokedexes.isNullOrEmpty()){
-                        for( e in it.pokedexes){
-                            val pId = try {
-                                URI(e.url).path.substringBeforeLast('/').substringAfterLast('/').toInt()
-                            }catch (e:Exception){
-                                0
-                            }
-                            tempList.add(pId)
-                        }
-                        tempData.value = tempList
-                        isFinished = true
-                    }
-                }
-            }
-        })
-        /*CoroutineScope(Dispatchers.Main).launch{
-            withContext(Dispatchers.IO){
-                while (!isFinished){
-                    Thread.sleep(200)
-                }
-                if (!tempList.isNullOrEmpty()){
-                    tempData.value = pokedexesDao.getPokedexesFromRegion(tempList).value
-                }
-            }
-        }*/
-        return tempData
-    }
+    fun getPokedexesByIds(idsList: List<Int>):LiveData<List<Pokedexes>> = pokedexesDao.getPokedexesFromRegion(idsList)
 
     fun cancelRepositoryJobs() = repositoryJob.cancel()
 }

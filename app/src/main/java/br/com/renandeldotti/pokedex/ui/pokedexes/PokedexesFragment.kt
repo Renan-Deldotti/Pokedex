@@ -34,14 +34,11 @@ class PokedexesFragment : Fragment(), PokedexesAdapter.PokedexAdapterListener {
         binding.recyclerViewPokedexes.layoutManager = GridLayoutManager(context,2)
         binding.recyclerViewPokedexes.adapter = PokedexesAdapter(ArrayList(), this)
 
-        /*viewModel.getPokedexFromRegion(args.regionId).observe(viewLifecycleOwner, Observer {pokedexesList ->
-            //binding.recyclerViewPokedexes.adapter = PokedexesAdapter(pokedexesList,this)
-            Log.e(TAG, "onCreateView: $pokedexesList")
-        })*/
-
-        for( i in args.pokedexesIds){
-            Log.e(TAG, "onCreateView: $i" )
-        }
+        viewModel.getPokedexesByIds(args.pokedexesIds.toList()).observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty()){
+                binding.recyclerViewPokedexes.adapter = PokedexesAdapter(it,this)
+            }
+        })
 
         return binding.root
     }

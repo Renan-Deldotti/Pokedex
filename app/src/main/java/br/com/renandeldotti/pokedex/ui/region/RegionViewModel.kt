@@ -24,21 +24,6 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getRegions(): LiveData<List<Regions>> = pokeRepository.getRegions()
 
-    /*fun getPokedexesFromRegion(regionId: String): LiveData<RegionPokedexes>{
-        val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId)
-        val pokedexesLiveData:MutableLiveData<RegionPokedexes> = MutableLiveData()
-        call.enqueue(object : Callback<RegionPokedexes>{
-            override fun onFailure(call: Call<RegionPokedexes>, t: Throwable) {
-                Log.e(TAG, "Failed retrieving info from API\tError: ${t.message}")
-            }
-
-            override fun onResponse(call: Call<RegionPokedexes>,response: Response<RegionPokedexes>) {
-                response.body()?.let {pokedexesLiveData.postValue(it)}
-            }
-        })
-        return pokedexesLiveData
-    }*/
-
     fun getPokedexesFromRegion(regionId: String): LiveData<List<Int>>{
         val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId)
         val pokedexesLiveData:MutableLiveData<List<Int>> = MutableLiveData()
