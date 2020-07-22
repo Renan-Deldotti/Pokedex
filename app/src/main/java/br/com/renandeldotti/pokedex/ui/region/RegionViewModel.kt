@@ -12,6 +12,7 @@ import br.com.renandeldotti.pokedex.database.Regions
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.net.URI
 
 class RegionViewModel(application: Application) : AndroidViewModel(application) {
     private val pokeApi: RetrofitPokeApi = RetrofitPokeApi()
@@ -23,7 +24,7 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
 
     fun getRegions(): LiveData<List<Regions>> = pokeRepository.getRegions()
 
-    fun getPokedexesFromRegion(regionId: String): LiveData<RegionPokedexes>{
+    /*fun getPokedexesFromRegion(regionId: String): LiveData<RegionPokedexes>{
         val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId)
         val pokedexesLiveData:MutableLiveData<RegionPokedexes> = MutableLiveData()
         call.enqueue(object : Callback<RegionPokedexes>{
@@ -33,6 +34,29 @@ class RegionViewModel(application: Application) : AndroidViewModel(application) 
 
             override fun onResponse(call: Call<RegionPokedexes>,response: Response<RegionPokedexes>) {
                 response.body()?.let {pokedexesLiveData.postValue(it)}
+            }
+        })
+        return pokedexesLiveData
+    }*/
+
+    fun getPokedexesFromRegion(regionId: String): LiveData<List<Int>>{
+        val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId)
+        val pokedexesLiveData:MutableLiveData<List<Int>> = MutableLiveData()
+        call.enqueue(object : Callback<RegionPokedexes>{
+            override fun onFailure(call: Call<RegionPokedexes>, t: Throwable) {
+                Log.e(TAG, "Failed retrieving info from API\tError: ${t.message}")
+            }
+
+            override fun onResponse(call: Call<RegionPokedexes>,response: Response<RegionPokedexes>) {
+                response.body()?.let {regionPokedexes->
+                    val tempList: ArrayList<Int> = ArrayList()
+                    if(!regionPokedexes.pokedexes.isNullOrEmpty()){
+                        for(pokedex in regionPokedexes.pokedexes){
+                            tempList.add(URI(pokedex.url).path.substringBeforeLast('/').substringAfterLast('/').toInt())
+                        }
+                    }
+                    pokedexesLiveData.postValue(tempList)
+                }
             }
         })
         return pokedexesLiveData

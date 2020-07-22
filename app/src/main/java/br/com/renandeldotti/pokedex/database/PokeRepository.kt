@@ -189,10 +189,10 @@ class PokeRepository(private val application: Application) {
 
     fun getRegions(): LiveData<List<Regions>> = regionsDao.getAllRegions()
 
-    fun fetchPokedexesFromRegion(regionId:Int):LiveData<List<Pokedexes>>{
-        val tempData = MutableLiveData<List<Pokedexes>>()
+    fun fetchPokedexesIdFromRegion(regionId:Int):LiveData<List<Int>>{
+        val tempData = MutableLiveData<List<Int>>()
         val call = pokeApi.getPokeApi().getPokedexesFromRegion(regionId.toString())
-        var isFinished:Boolean = false
+        var isFinished = false
         val tempList = ArrayList<Int>()
         call.enqueue(object : Callback<RegionPokedexes>{
             override fun onFailure(call: Call<RegionPokedexes>, t: Throwable) {
@@ -213,22 +213,13 @@ class PokeRepository(private val application: Application) {
                             }
                             tempList.add(pId)
                         }
-                        //tempData.value = pokedexesDao.getPokedexesFromRegion(tempList)
-                        uiScope.launch {
-                            withContext(Dispatchers.IO){
-                                Log.e(TAG, "onResponse: $tempList" )
-                                Log.e(TAG, "onResponse: "+pokedexesDao.getAllPokedexes().value )
-                                //tempData.value = pokedexesDao.getAllPokedexes().value
-                                val ids = pokedexesDao.countPokedexesFromRegion(tempList)
-                                Log.e(TAG, "onResponse: $ids")
-                            }
-                        }
+                        tempData.value = tempList
                         isFinished = true
                     }
                 }
             }
         })
-        CoroutineScope(Dispatchers.Main).launch{
+        /*CoroutineScope(Dispatchers.Main).launch{
             withContext(Dispatchers.IO){
                 while (!isFinished){
                     Thread.sleep(200)
@@ -237,7 +228,7 @@ class PokeRepository(private val application: Application) {
                     tempData.value = pokedexesDao.getPokedexesFromRegion(tempList).value
                 }
             }
-        }
+        }*/
         return tempData
     }
 
