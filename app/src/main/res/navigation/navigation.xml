@@ -68,5 +68,8 @@
         <argument
             android:name="pokedexesIds"
             app:argType="integer[]" />
+        <action
+            android:id="@+id/action_pokedexesFragment_to_nav_pokemonList"
+            app:destination="@id/nav_pokemonList" />
     </fragment>
 </navigation>

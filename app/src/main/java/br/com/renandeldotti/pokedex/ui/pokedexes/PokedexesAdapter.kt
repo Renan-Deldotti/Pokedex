@@ -36,13 +36,13 @@ class PokedexesAdapter(
         init {
             itemView.setOnClickListener {
                 if (adapterPosition != RecyclerView.NO_POSITION) {
-                    pokedexesAdapterListener.selectedPokedexPosition(adapterPosition)
+                    pokedexesAdapterListener.selectedPokedexPosition(pokedexesNamesList[adapterPosition])
                 }
             }
         }
     }
 
     interface PokedexAdapterListener {
-        fun selectedPokedexPosition(position: Int)
+        fun selectedPokedexPosition(pokedex: Pokedexes)
     }
 }

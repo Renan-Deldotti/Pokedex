@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import br.com.renandeldotti.pokedex.R
+import br.com.renandeldotti.pokedex.database.Pokedexes
 import br.com.renandeldotti.pokedex.databinding.FragmentPokedexesBinding
 
 class PokedexesFragment : Fragment(), PokedexesAdapter.PokedexAdapterListener {
@@ -43,7 +46,7 @@ class PokedexesFragment : Fragment(), PokedexesAdapter.PokedexAdapterListener {
         return binding.root
     }
 
-    override fun selectedPokedexPosition(position: Int) {
-
+    override fun selectedPokedexPosition(pokedex: Pokedexes) {
+        findNavController().navigate(PokedexesFragmentDirections.actionPokedexesFragmentToNavPokemonList(pokedex.pokedexId.toString(), pokedex.name))
     }
 }
